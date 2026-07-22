@@ -34,7 +34,7 @@ export default function DocumentationPage() {
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Architecture Image */}
         <section className="mb-12 sm:mb-16">
-          <div className="border-2 border-black overflow-hidden">
+          <div className="relative overflow-hidden border-2 border-black">
             <Image
               src="/Architecture.png"
               alt="RepoLoom.ai system architecture diagram"
@@ -43,6 +43,12 @@ export default function DocumentationPage() {
               className="w-full h-auto"
               priority
             />
+            <div
+              className="absolute left-[9.82%] top-[51.9%] flex h-[10.45%] w-[7%] items-center justify-center bg-white px-[0.25%] text-center font-sans text-[clamp(3px,0.55vw,8px)] font-medium leading-[1.08]"
+              aria-hidden="true"
+            >
+              RepoLoom.ai app installation and selects repositories
+            </div>
           </div>
           <p className="text-sm text-gray-500 text-center mt-3">
             High-level system architecture — from GitHub issue to pull request
