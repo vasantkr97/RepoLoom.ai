@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Precision Loom — semantic color system */
+    --color-bg: #f1eee5;
+    --color-surface: #fbf9f3;
+    --color-surface-strong: #e5e0d4;
+    --color-text: #0b1411;
+    --color-muted: #5e6963;
+    --color-accent: #cf522f;
+    --color-accent-strong: #a83a20;
+    --color-focus: #2459e8;
+    --color-success: #187a50;
+    --color-warning: #9a6700;
+    --color-danger: #c53c34;
+    --color-rule: rgba(11, 20, 17, 0.16);
+    --color-rule-strong: rgba(11, 20, 17, 0.32);
+
+    /* Precision Loom — typography */
+    --font-display: var(--font-instrument-serif), Georgia, serif;
+    --font-body: var(--font-space-grotesk), "Trebuchet MS", sans-serif;
+    --font-mono:
+      "IBM Plex Mono", "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+    --text-xs: 0.75rem;
+    --leading-xs: 1rem;
+    --text-sm: 0.875rem;
+    --leading-sm: 1.25rem;
+    --text-base: 1rem;
+    --leading-base: 1.55rem;
+    --text-lg: 1.125rem;
+    --leading-lg: 1.65rem;
+    --text-xl: 1.375rem;
+    --leading-xl: 1.8rem;
+    --text-2xl: clamp(2.4rem, 6vw, 5.6rem);
+    --leading-2xl: 0.94;
+
+    /* Precision Loom — spacing */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-24: 6rem;
+
+    /* Precision Loom — shape and depth */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.625rem;
+    --radius-lg: 1.125rem;
+    --shadow-sm: 0 1px 0 rgba(11, 20, 17, 0.08);
+    --shadow-md: 0 16px 40px rgba(11, 20, 17, 0.08);
+    --shadow-lg: 0 30px 80px rgba(11, 20, 17, 0.13);
+
+    /* Precision Loom — motion */
+    --duration-fast: 140ms;
+    --duration-base: 260ms;
+    --duration-slow: 560ms;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-spring: cubic-bezier(0.2, 0.9, 0.25, 1.2);
+
+    /* Existing component-library aliases */
+    --background: 43 30% 92%;
+    --foreground: 160 29% 6%;
+    --card: 42 40% 97%;
+    --card-foreground: 160 29% 6%;
+    --popover: 42 40% 97%;
+    --popover-foreground: 160 29% 6%;
+    --primary: 160 29% 6%;
+    --primary-foreground: 42 40% 97%;
+    --secondary: 42 20% 88%;
+    --secondary-foreground: 160 29% 6%;
+    --muted: 42 20% 88%;
+    --muted-foreground: 150 6% 39%;
+    --accent: 14 61% 50%;
+    --accent-foreground: 42 40% 97%;
+    --destructive: 4 55% 49%;
+    --destructive-foreground: 42 40% 97%;
+    --border: 150 7% 77%;
+    --input: 150 7% 77%;
+    --ring: 224 81% 53%;
+    --radius: var(--radius-md);
+    --sidebar-background: 43 30% 92%;
+    --sidebar-foreground: 160 29% 6%;
+    --sidebar-primary: 160 29% 6%;
+    --sidebar-primary-foreground: 42 40% 97%;
+    --sidebar-accent: 42 20% 88%;
+    --sidebar-accent-foreground: 160 29% 6%;
+    --sidebar-border: 150 7% 77%;
+    --sidebar-ring: 224 81% 53%;
+  }
+
+  .dark {
+    --background: 160 29% 6%;
+    --foreground: 42 40% 97%;
+    --card: 160 22% 9%;
+    --card-foreground: 42 40% 97%;
+    --border: 150 8% 24%;
+  }
+
+  *:not(svg):not(svg *) {
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-bg);
+  }
+
+  body {
+    min-width: 320px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-base);
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-surface);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .precision-canvas {
+    background-color: var(--color-bg);
+    background-image:
+      linear-gradient(rgba(11, 20, 17, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(11, 20, 17, 0.035) 1px, transparent 1px),
+      radial-gradient(circle at 82% 6%, rgba(207, 82, 47, 0.1), transparent 27%);
+    background-position: center;
+    background-size:
+      42px 42px,
+      42px 42px,
+      100% 100%;
+  }
+
+  .precision-surface {
+    background: color-mix(in srgb, var(--color-surface) 96%, transparent);
+    border: 1px solid var(--color-rule);
+    box-shadow: var(--shadow-md);
+  }
+
+  .precision-label {
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1rem;
+    text-transform: uppercase;
+  }
+
+  .precision-enter {
+    animation: precision-enter var(--duration-slow) var(--ease-out) both;
+  }
+
+  .loomline-draw {
+    animation: loomline-draw 900ms var(--ease-out) both;
+    transform-origin: top;
+  }
+}
+
+@keyframes precision-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loomline-draw {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes loom-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(207, 82, 47, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(207, 82, 47, 0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in var(--duration-base) var(--ease-out);
+}
+
+.animate-scale-in {
+  animation: scale-in var(--duration-base) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-delay: 0ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
