@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -10,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Loader2, FileCode } from "lucide-react";
+import { AlertTriangle, FileCode, Files, Loader2 } from "lucide-react";
 
 interface FileDiff {
   path: string;
@@ -84,35 +83,39 @@ const GitDiff = ({ jobId, token }: GitDiffProps) => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-      </div>
+      <DiffState
+        icon={<Loader2 className="h-5 w-5 animate-spin" />}
+        label="Loading file changes"
+        detail="The diff will resolve as soon as the worker publishes it."
+      />
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-red-600 text-sm">Error: {error}</p>
-      </div>
+      <DiffState
+        icon={<AlertTriangle className="h-5 w-5" />}
+        label="Diff unavailable"
+        detail={error}
+        tone="danger"
+      />
     );
   }
 
   if (!files || files.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-muted-foreground text-sm">
-          No changes to display yet. Changes will appear here once code
-          generation is complete.
-        </p>
-      </div>
+      <DiffState
+        icon={<Files className="h-5 w-5" />}
+        label="No changes published yet"
+        detail="This panel will populate after RepoLoom has generated the first coherent file change."
+      />
     );
   }
 
   const renderUnifiedDiff = (diffOutput: string) => {
     if (!diffOutput) {
       return (
-        <div className="p-4 text-muted-foreground text-sm">
+        <div className="p-5 text-sm text-[var(--color-muted)]">
           No diff output available
         </div>
       );
@@ -121,23 +124,23 @@ const GitDiff = ({ jobId, token }: GitDiffProps) => {
     const lines = diffOutput.split("\n");
 
     return (
-      <div className="font-mono text-xs bg-background">
+      <div className="bg-[var(--color-surface)] font-[family-name:var(--font-mono)] text-xs">
         {lines.map((line, idx) => {
           let bgColor = "";
           let textColor = "text-foreground";
           let linePrefix = "";
 
           if (line.startsWith("+")) {
-            bgColor = "bg-green-50 dark:bg-green-950/30";
-            textColor = "text-green-700 dark:text-green-400";
+            bgColor = "bg-[color:rgba(24,122,80,0.1)]";
+            textColor = "text-[var(--color-success)]";
             linePrefix = "+";
           } else if (line.startsWith("-")) {
-            bgColor = "bg-red-50 dark:bg-red-950/30";
-            textColor = "text-red-700 dark:text-red-400";
+            bgColor = "bg-[color:rgba(197,60,52,0.1)]";
+            textColor = "text-[var(--color-danger)]";
             linePrefix = "-";
           } else if (line.startsWith("@@")) {
-            bgColor = "bg-blue-50 dark:bg-blue-950/30";
-            textColor = "text-blue-700 dark:text-blue-400";
+            bgColor = "bg-[color:rgba(36,89,232,0.09)]";
+            textColor = "text-[var(--color-focus)]";
           } else if (
             line.startsWith("diff --git") ||
             line.startsWith("index") ||
@@ -146,16 +149,16 @@ const GitDiff = ({ jobId, token }: GitDiffProps) => {
             line.startsWith("new file") ||
             line.startsWith("deleted file")
           ) {
-            bgColor = "bg-muted/50";
-            textColor = "text-muted-foreground";
+            bgColor = "bg-[var(--color-bg)]";
+            textColor = "text-[var(--color-muted)]";
           }
 
           return (
             <div
               key={idx}
-              className={`px-4 py-0.5 ${bgColor} ${textColor} hover:bg-opacity-80 transition-colors`}
+              className={`min-w-max px-4 py-0.5 ${bgColor} ${textColor}`}
             >
-              <span className="select-none text-muted-foreground mr-4 inline-block w-8 text-right">
+              <span className="mr-4 inline-block w-8 select-none text-right text-[color:rgba(94,105,99,0.65)]">
                 {idx + 1}
               </span>
               <span className="whitespace-pre">{line || " "}</span>
@@ -167,17 +170,17 @@ const GitDiff = ({ jobId, token }: GitDiffProps) => {
   };
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="border-b border-border p-3 bg-muted/30">
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="flex-none border-b border-[var(--color-rule)] bg-[var(--color-surface)] p-3 sm:px-5">
         <div className="flex items-center gap-3">
-          <FileCode className="w-4 h-4 text-muted-foreground" />
+          <FileCode className="h-4 w-4 flex-none text-[var(--color-muted)]" />
           <Select
             value={selectedFile.toString()}
             onValueChange={(value: string) => setSelectedFile(parseInt(value))}
           >
-            <SelectTrigger className="w-full max-w-md">
+            <SelectTrigger className="min-h-10 w-full max-w-md rounded-[var(--radius-md)] border-[var(--color-rule-strong)] bg-[var(--color-bg)]">
               <SelectValue>
-                <span className="font-mono text-sm">
+                <span className="font-[family-name:var(--font-mono)] text-xs">
                   {files[selectedFile].path}
                 </span>
               </SelectValue>
@@ -185,29 +188,66 @@ const GitDiff = ({ jobId, token }: GitDiffProps) => {
             <SelectContent>
               {files.map((file, idx) => (
                 <SelectItem key={idx} value={idx.toString()}>
-                  <span className="font-mono text-sm">{file.path}</span>
+                  <span className="font-[family-name:var(--font-mono)] text-xs">
+                    {file.path}
+                  </span>
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          <span className="text-xs text-muted-foreground whitespace-nowrap">
+          <span className="whitespace-nowrap text-xs text-[var(--color-muted)]">
             {selectedFile + 1} of {files.length}
           </span>
         </div>
       </div>
 
-      <ScrollArea className="flex-1">
-        <Card className="m-4 overflow-hidden border">
-          <div className="bg-muted/50 px-4 py-2 border-b">
-            <p className="text-sm font-mono">{files[selectedFile].path}</p>
+      <ScrollArea className="min-h-0 flex-1">
+        <div className="m-3 overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-rule-strong)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] sm:m-5">
+          <div className="flex items-center justify-between border-b border-[var(--color-rule)] bg-[var(--color-bg)] px-4 py-3">
+            <p className="font-[family-name:var(--font-mono)] text-xs">
+              {files[selectedFile].path}
+            </p>
+            <span className="precision-label">Unified diff</span>
           </div>
           <div className="overflow-x-auto">
             {renderUnifiedDiff(files[selectedFile].diffOutput || "")}
           </div>
-        </Card>
+        </div>
       </ScrollArea>
     </div>
   );
 };
+
+function DiffState({
+  icon,
+  label,
+  detail,
+  tone = "neutral",
+}: {
+  icon: React.ReactNode;
+  label: string;
+  detail: string;
+  tone?: "neutral" | "danger";
+}) {
+  return (
+    <div className="flex h-full items-center justify-center p-6" role="status">
+      <div className="max-w-sm text-center">
+        <span
+          className={`mx-auto flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] ${
+            tone === "danger"
+              ? "bg-[color:rgba(197,60,52,0.1)] text-[var(--color-danger)]"
+              : "bg-[var(--color-text)] text-[var(--color-surface)]"
+          }`}
+        >
+          {icon}
+        </span>
+        <p className="mt-5 font-semibold">{label}</p>
+        <p className="mt-2 text-sm leading-6 text-[var(--color-muted)]">
+          {detail}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default GitDiff;

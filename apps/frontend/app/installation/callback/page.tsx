@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
+import BrandMark from "@/components/BrandMark";
 
 interface Installation {
   installationId: number;
@@ -134,60 +135,80 @@ function InstallationCallbackContent() {
     verifyInstallation();
   }, [searchParams, router, user, token, isLoading]);
 
+  return <InstallationFrame status={status} message={message} />;
+}
+
+function InstallationFrame({
+  status,
+  message,
+}: {
+  status: "checking" | "success" | "error";
+  message: string;
+}) {
+  const copy = {
+    checking: {
+      eyebrow: "Installation trace / verifying",
+      title: "Connecting the repository loom.",
+      note: "GitHub may need a few seconds to publish the installation.",
+    },
+    success: {
+      eyebrow: "Installation trace / complete",
+      title: "Repositories connected.",
+      note: "Opening your workspace with the new repository scope.",
+    },
+    error: {
+      eyebrow: "Installation trace / attention",
+      title: "The handoff needs attention.",
+      note: "You can finish or retry repository setup from the workspace.",
+    },
+  }[status];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-4">
-        <div className="text-center">
-          {/* Icon */}
-          <div className="mb-6">
+    <main className="precision-canvas flex min-h-screen items-center justify-center px-4 py-12">
+      <div
+        className="w-full max-w-2xl overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-rule-strong)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)]"
+        role="status"
+        aria-live="polite"
+      >
+        <div className="border-b border-[var(--color-rule)] px-5 py-4 sm:px-8">
+          <BrandMark />
+        </div>
+        <div className="grid sm:grid-cols-[150px_1fr]">
+          <div className="flex items-center justify-center border-b border-[var(--color-rule)] bg-[var(--color-text)] p-8 text-[var(--color-surface)] sm:border-b-0 sm:border-r">
             {status === "checking" && (
-              <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-                <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
-              </div>
+              <Loader2 className="h-10 w-10 animate-spin text-[var(--color-accent)]" />
             )}
             {status === "success" && (
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                <CheckCircle className="w-10 h-10 text-green-600" />
-              </div>
+              <CheckCircle className="h-10 w-10 text-[var(--color-success)]" />
             )}
             {status === "error" && (
-              <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto">
-                <XCircle className="w-10 h-10 text-red-600" />
-              </div>
+              <XCircle className="h-10 w-10 text-[var(--color-danger)]" />
             )}
           </div>
-
-          {/* Title */}
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">
-            {status === "checking" && "Setting Up Your Installation"}
-            {status === "success" && "Installation Complete!"}
-            {status === "error" && "Setup Issue"}
-          </h2>
-
-          {/* Message */}
-          <p className="text-gray-600 mb-6">{message}</p>
-
-          {/* Progress indicator */}
-          {status === "checking" && (
-            <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+          <div className="p-6 sm:p-9">
+            <p className="precision-label">{copy.eyebrow}</p>
+            <h1 className="mt-3 font-[family-name:var(--font-display)] text-5xl leading-[0.9] tracking-[-0.045em]">
+              {copy.title}
+            </h1>
+            <p className="mt-5 text-sm font-semibold leading-6">{message}</p>
+            <p className="mt-2 text-sm leading-6 text-[var(--color-muted)]">
+              {copy.note}
+            </p>
+            <div className="mt-8 h-px overflow-hidden bg-[var(--color-rule)]">
               <div
-                className="bg-blue-600 h-2 rounded-full animate-pulse"
-                style={{ width: "60%" }}
-              ></div>
+                className={`h-full transition-all duration-[var(--duration-slow)] ${
+                  status === "checking"
+                    ? "w-3/5 animate-pulse bg-[var(--color-accent)]"
+                    : status === "success"
+                      ? "w-full bg-[var(--color-success)]"
+                      : "w-full bg-[var(--color-danger)]"
+                }`}
+              />
             </div>
-          )}
-
-          {/* Additional info */}
-          <p className="text-xs text-gray-500 mt-4">
-            {status === "checking" &&
-              "This usually takes just a few seconds..."}
-            {status === "success" && "Your repositories are now connected!"}
-            {status === "error" &&
-              "Don't worry, you can complete setup from your dashboard."}
-          </p>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
@@ -195,20 +216,10 @@ export default function InstallationCallback() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-4">
-            <div className="text-center">
-              <div className="mb-6">
-                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-                  <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
-                </div>
-              </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                Loading...
-              </h2>
-            </div>
-          </div>
-        </div>
+        <InstallationFrame
+          status="checking"
+          message="Preparing the installation callback."
+        />
       }
     >
       <InstallationCallbackContent />

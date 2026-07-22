@@ -1,124 +1,59 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import octopusLogo from "@/assets/octopus.png";
+import BrandMark from "@/components/BrandMark";
 import MobileMenu from "@/components/MobileMenu";
-import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 
-const navVariants = {
-  hidden: { y: -100, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut" as const,
-    },
-  },
-};
+const navigation = [
+  { label: "Product", href: "/#product" },
+  { label: "Method", href: "/#method" },
+  { label: "Documentation", href: "/documentation" },
+];
 
-const itemVariants = {
-  hidden: { opacity: 0, y: -10 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
-const Navbar = () => {
+export default function Navbar() {
   return (
-    <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 w-full"
-      initial="hidden"
-      animate="visible"
-      variants={navVariants}
-    >
-      <div className="flex items-center justify-between border-b border-gray-200/60 bg-white/95 backdrop-blur-sm px-4 sm:px-8 lg:px-12 py-3 sm:py-4">
-        <motion.div
-          className="flex items-center gap-3"
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.2 }}
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-rule)] bg-[color:rgba(241,238,229,0.94)] backdrop-blur-md">
+      <div className="mx-auto flex min-h-20 max-w-[1440px] items-center justify-between gap-6 px-4 sm:px-6 lg:px-10">
+        <Link
+          href="/"
+          aria-label="RepoLoom.ai home"
+          className="rounded-[var(--radius-sm)]"
         >
-          <Image
-            src={octopusLogo}
-            alt="RepoLoom.ai logo"
-            width={40}
-            height={40}
-          />
-          <span className="font-sans font-bold text-foreground text-xl">
-            RepoLoom.ai
-          </span>
-        </motion.div>
+          <BrandMark />
+        </Link>
 
-        <motion.div
-          className="hidden lg:flex flex-1 items-center justify-center font-sans font-medium text-base gap-10"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.3,
-              },
-            },
-          }}
-        >
-          <motion.div variants={itemVariants}>
+        <div className="hidden items-center gap-8 lg:flex">
+          {navigation.map((item) => (
             <Link
-              href="/"
-              className="hover:text-muted-foreground transition-colors"
+              key={item.label}
+              href={item.href}
+              className="relative py-2 text-sm font-semibold text-[var(--color-muted)] transition-colors duration-[var(--duration-fast)] hover:text-[var(--color-text)] active:translate-y-px after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-[var(--color-accent)] after:transition-transform hover:after:scale-x-100"
             >
-              Home
+              {item.label}
             </Link>
-          </motion.div>
-          <motion.div variants={itemVariants}>
-            <a
-              href="/documentation"
-              className="hover:text-muted-foreground transition-colors"
-            >
-              Documentation
-            </a>
-          </motion.div>
-          <motion.div variants={itemVariants}>
-            <Link
-              href="/dashboard"
-              className="hover:text-muted-foreground transition-colors"
-            >
-              Dashboard
-            </Link>
-          </motion.div>
-        </motion.div>
+          ))}
+        </div>
 
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.5 }}
-        >
-          <Button
-            variant="cta"
-            size="default"
-            className="rounded-full hidden lg:block"
-            onClick={() => window.open("https://github.com/signup", "_blank")}
+        <div className="hidden items-center gap-3 lg:flex">
+          <Link
+            href="/dashboard"
+            className="inline-flex min-h-11 items-center justify-center rounded-[var(--radius-md)] px-4 text-sm font-semibold transition-colors hover:bg-[var(--color-surface)] active:translate-y-px"
           >
-            Sign Up
-          </Button>
-        </motion.div>
+            Open workspace
+          </Link>
+          <button
+            type="button"
+            onClick={() => window.open("https://github.com/signup", "_blank")}
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[var(--color-text)] px-4 text-sm font-bold text-[var(--color-surface)] transition duration-[var(--duration-fast)] hover:bg-[var(--color-accent)] active:translate-y-px"
+          >
+            Start with GitHub
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
 
         <MobileMenu />
       </div>
-    </motion.nav>
+    </nav>
   );
-};
-
-export default Navbar;
+}

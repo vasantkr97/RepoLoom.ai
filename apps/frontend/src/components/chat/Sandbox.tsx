@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card } from "@/components/ui/card";
-import { Loader2, Terminal, CheckCircle2, Circle } from "lucide-react";
+import { CheckCircle2, Loader2, Terminal } from "lucide-react";
 
 interface SandboxProps {
   jobId: string;
@@ -151,81 +150,88 @@ const E2BSandbox = ({ jobId, token }: SandboxProps) => {
   }, [jobId, token]);
 
   return (
-    <div className="h-full flex flex-col">
-      <Card className="flex-1 m-4 overflow-hidden border flex flex-col">
-        <div className="bg-muted/50 px-4 py-2 border-b flex items-center justify-between">
+    <div className="flex h-full min-h-0 flex-col p-3 sm:p-5">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-rule-strong)] bg-[var(--color-text)] text-[var(--color-surface)] shadow-[var(--shadow-md)]">
+        <div className="flex flex-none items-center justify-between gap-4 border-b border-white/15 px-4 py-3">
           <div className="flex items-center gap-2">
-            <Terminal className="w-4 h-4" />
-            <p className="text-sm font-mono">E2B Sandbox Terminal</p>
+            <Terminal className="h-4 w-4 text-[var(--color-accent)]" />
+            <div>
+              <p className="precision-label !text-white/40">
+                Isolated execution
+              </p>
+              <p className="text-xs font-semibold">E2B sandbox terminal</p>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-none items-center gap-2">
             {jobState === "active" && (
               <>
-                <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
-                <span className="text-xs text-muted-foreground">
-                  Progress: {currentProgress}%
+                <Loader2 className="h-4 w-4 animate-spin text-[var(--color-accent)]" />
+                <span className="font-[family-name:var(--font-mono)] text-[10px] text-white/55">
+                  {currentProgress}%
                 </span>
               </>
             )}
             {jobState === "completed" && (
               <>
-                <CheckCircle2 className="w-4 h-4 text-green-600" />
-                <span className="text-xs text-green-600">Completed</span>
+                <CheckCircle2 className="h-4 w-4 text-[var(--color-success)]" />
+                <span className="text-xs text-[var(--color-success)]">
+                  Completed
+                </span>
               </>
             )}
             {jobState === "failed" && (
-              <span className="text-xs text-red-600">Failed</span>
+              <span className="text-xs text-[var(--color-danger)]">Failed</span>
             )}
             {jobState === "waiting" && (
-              <span className="text-xs text-muted-foreground">Waiting...</span>
+              <span className="text-xs text-white/45">Waiting</span>
             )}
           </div>
         </div>
-        <ScrollArea className="flex-1 p-4">
-          <div className="font-mono text-sm space-y-2">
+        <ScrollArea className="min-h-0 flex-1">
+          <div className="space-y-2 p-4 font-[family-name:var(--font-mono)] text-xs leading-5 sm:p-5">
             {logs.map((log, idx) => (
               <div
                 key={idx}
-                className={`flex items-start gap-2 ${
+                className={`grid grid-cols-[68px_1fr] gap-3 ${
                   log.type === "error"
-                    ? "text-red-600"
+                    ? "text-[var(--color-danger)]"
                     : log.type === "success"
-                      ? "text-green-600 font-semibold"
+                      ? "font-semibold text-[var(--color-success)]"
                       : log.type === "command"
-                        ? "text-blue-600"
+                        ? "text-[var(--color-focus)]"
                         : log.type === "info"
-                          ? "text-purple-600"
-                          : "text-foreground"
+                          ? "text-[var(--color-accent)]"
+                          : "text-white/72"
                 }`}
               >
-                <span className="text-muted-foreground text-xs min-w-[70px]">
+                <span className="text-[10px] text-white/30">
                   {log.timestamp.toLocaleTimeString()}
                 </span>
-                <span className="flex-1">{log.content}</span>
+                <span className="min-w-0 break-words">{log.content}</span>
               </div>
             ))}
             {jobState === "active" && (
-              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded text-blue-800 text-xs flex items-center gap-2">
-                <Loader2 className="w-4 h-4 animate-spin" />
+              <div className="mt-5 flex items-center gap-3 rounded-[var(--radius-md)] border border-[var(--color-accent)] bg-[color:rgba(207,82,47,0.1)] p-3 text-xs text-white/75">
+                <Loader2 className="h-4 w-4 flex-none animate-spin text-[var(--color-accent)]" />
                 <div>
-                  <strong>Active:</strong> Sandbox is running and will remain
-                  available for 30 minutes after completion.
+                  <strong className="text-white">Active trace.</strong> The
+                  sandbox remains available for 30 minutes after completion.
                 </div>
               </div>
             )}
             {jobState === "completed" && (
-              <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded text-green-800 text-xs flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4" />
+              <div className="mt-5 flex items-center gap-3 rounded-[var(--radius-md)] border border-[var(--color-success)] bg-[color:rgba(24,122,80,0.1)] p-3 text-xs text-white/75">
+                <CheckCircle2 className="h-4 w-4 flex-none text-[var(--color-success)]" />
                 <div>
-                  <strong>Complete:</strong> Sandbox will remain active for 30
-                  minutes for review and testing.
+                  <strong className="text-white">Validation complete.</strong>{" "}
+                  The sandbox remains available for 30 minutes for review.
                 </div>
               </div>
             )}
             <div ref={logsEndRef} />
           </div>
         </ScrollArea>
-      </Card>
+      </div>
     </div>
   );
 };

@@ -170,6 +170,63 @@
     animation: loomline-draw 900ms var(--ease-out) both;
     transform-origin: top;
   }
+
+  .docs-shell .docs-content > section,
+  .docs-shell .docs-content > div {
+    max-width: 100%;
+  }
+
+  .docs-shell .docs-content h2 {
+    margin-bottom: 1.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+  }
+
+  .docs-shell .docs-content h2 svg {
+    color: var(--color-accent);
+    stroke-width: 1.5;
+  }
+
+  .docs-shell .docs-content h3,
+  .docs-shell .docs-content h4 {
+    letter-spacing: -0.02em;
+  }
+
+  .docs-shell .docs-content .border-2 {
+    border-width: 1px;
+    border-color: var(--color-rule-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .docs-shell .docs-content .border-black,
+  .docs-shell .docs-content .border-gray-200 {
+    border-color: var(--color-rule-strong);
+  }
+
+  .docs-shell .docs-content .bg-gray-50,
+  .docs-shell .docs-content .bg-white {
+    background-color: var(--color-surface);
+  }
+
+  .docs-shell .docs-content .text-gray-700,
+  .docs-shell .docs-content .text-gray-600,
+  .docs-shell .docs-content .text-gray-500 {
+    color: var(--color-muted);
+  }
+
+  .docs-shell .docs-content [class*="hover:bg-gray-50"]:hover {
+    background-color: var(--color-bg);
+  }
+
+  .docs-shell .docs-content code,
+  .docs-shell .docs-content .font-mono {
+    font-family: var(--font-mono);
+  }
 }
 
 @keyframes precision-enter {

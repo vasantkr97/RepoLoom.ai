@@ -1,60 +1,57 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 
-const MobileMenu = () => {
+const navigation = [
+  { label: "Product", href: "/#product" },
+  { label: "Method", href: "/#method" },
+  { label: "Documentation", href: "/documentation" },
+  { label: "Workspace", href: "/dashboard" },
+];
+
+export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="lg:hidden">
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2"
-        aria-label="Toggle menu"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-rule)] bg-[var(--color-surface)] transition-colors hover:border-[var(--color-text)] active:translate-y-px"
+        aria-label={isOpen ? "Close navigation" : "Open navigation"}
+        aria-expanded={isOpen}
+        aria-controls="mobile-navigation"
       >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
+        {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 bg-white border-b border-gray-200/60 shadow-lg">
-          <div className="flex flex-col items-start gap-4 px-6 py-6">
-            <Link
-              href="/"
-              className="font-sans font-medium text-base hover:text-muted-foreground transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Home
-            </Link>
-            <a
-              href="/documentation"
-              className="font-sans font-medium text-base hover:text-muted-foreground transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Documentation
-            </a>
-            <Link
-              href="/dashboard"
-              className="font-sans font-medium text-base hover:text-muted-foreground transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Dashboard
-            </Link>
-            <Button
-              variant="cta"
-              size="default"
-              className="rounded-full w-full mt-2"
-              onClick={() => window.open("https://github.com/signup", "_blank")}
-            >
-              Sign Up
-            </Button>
+        <div
+          id="mobile-navigation"
+          className="absolute inset-x-0 top-full border-b border-[var(--color-rule-strong)] bg-[var(--color-bg)] p-4 shadow-[var(--shadow-lg)]"
+        >
+          <div className="mx-auto max-w-[1440px] rounded-[var(--radius-lg)] border border-[var(--color-rule)] bg-[var(--color-surface)] p-3">
+            {navigation.map((item, index) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={() => setIsOpen(false)}
+                className="flex min-h-12 items-center justify-between rounded-[var(--radius-md)] px-3 text-base font-semibold transition-colors hover:bg-[var(--color-surface-strong)] active:translate-y-px"
+              >
+                <span className="flex items-center gap-3">
+                  <span className="font-[family-name:var(--font-mono)] text-[10px] text-[var(--color-muted)]">
+                    0{index + 1}
+                  </span>
+                  {item.label}
+                </span>
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            ))}
           </div>
         </div>
       )}
     </div>
   );
-};
-
-export default MobileMenu;
+}

@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { GitHubRepo, ChatResponse } from "@/types";
+import BrandMark from "@/components/BrandMark";
 import {
   ArrowUpRight,
   Check,
@@ -173,17 +174,7 @@ export default function Dashboard() {
     <div className="precision-canvas min-h-screen text-[var(--color-text)]">
       <header className="sticky top-0 z-40 border-b border-[var(--color-rule)] bg-[color:rgba(241,238,229,0.94)] backdrop-blur-md">
         <div className="mx-auto flex min-h-20 max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
-          <div className="flex min-w-0 items-center gap-3">
-            <LoomMark />
-            <div className="min-w-0">
-              <p className="truncate font-semibold tracking-[-0.025em]">
-                RepoLoom.ai
-              </p>
-              <p className="precision-label hidden sm:block">
-                Repository intelligence
-              </p>
-            </div>
-          </div>
+          <BrandMark />
 
           <div className="hidden items-center gap-2 rounded-full border border-[var(--color-rule)] bg-[var(--color-surface)] px-3 py-1.5 md:flex">
             <span className="h-2 w-2 rounded-full bg-[var(--color-success)]" />
@@ -543,19 +534,6 @@ export default function Dashboard() {
         </p>
       </footer>
     </div>
-  );
-}
-
-function LoomMark() {
-  return (
-    <span
-      className="relative flex h-10 w-10 flex-none items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-text)]"
-      aria-hidden="true"
-    >
-      <span className="absolute h-6 w-px -rotate-[28deg] bg-[var(--color-accent)]" />
-      <span className="absolute h-6 w-px rotate-[28deg] bg-[var(--color-surface)]" />
-      <span className="absolute h-px w-5 bg-[var(--color-surface)]" />
-    </span>
   );
 }
 

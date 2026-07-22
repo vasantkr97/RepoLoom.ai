@@ -1,186 +1,104 @@
-"use client";
+import {
+  Braces,
+  Check,
+  GitPullRequest,
+  Network,
+  ScanSearch,
+  TestTube2,
+} from "lucide-react";
 
-import Image from "next/image";
-import logoImage from "@/assets/100xSWE_Light.png";
-import dbImage from "@/assets/pinecone_logo.png";
-import codeGraph from "@/assets/code_generation_light.png";
-import files from "@/assets/relevant_files.png";
-import candidateFiles from "@/assets/code_generation_white.png";
-import compressedFiles from "@/assets/compressed_files_light.png";
-import langgraphFlow from "@/assets/workflow_Light_bold.png";
-import humanApproval from "@/assets/human_approval_light.png";
-import pullRequest from "@/assets/pull_request_light.png";
+const stages = [
+  { label: "Retrieve", icon: ScanSearch },
+  { label: "Understand", icon: Network },
+  { label: "Generate", icon: Braces },
+  { label: "Validate", icon: TestTube2 },
+];
 
-const ProcessVisualization = () => {
-  const steps = [
-    { id: 1, title: "Pinecone & Redis Indexing", angle: 0, icon: dbImage },
-    { id: 2, title: "Hybrid Search (RRF)", angle: 45, icon: files },
-    { id: 3, title: "AST & Code Graph", angle: 90, icon: codeGraph },
-    { id: 4, title: "Code Skeletons", angle: 135, icon: compressedFiles },
-    { id: 5, title: "Files to Modify", angle: 180, icon: candidateFiles },
-    { id: 6, title: "LangGraph Workflow", angle: 225, icon: langgraphFlow },
-    { id: 7, title: "Human Approval", angle: 270, icon: humanApproval },
-    { id: 8, title: "Create Pull Request", angle: 315, icon: pullRequest },
-  ];
-
-  const round = (num: number, decimals: number = 6) => {
-    return Number(num.toFixed(decimals));
-  };
-
-  const generateTentaclePath = (angle: number) => {
-    const centerX = 50;
-    const centerY = 50;
-    const radius = 37.5;
-
-    const angleRad = (angle * Math.PI) / 180;
-    const endX = round(centerX + radius * Math.cos(angleRad));
-    const endY = round(centerY + radius * Math.sin(angleRad));
-
-    const control1Offset = radius * 0.3;
-    const perpAngle1 = angleRad + Math.PI / 4;
-    const cp1x = round(centerX + control1Offset * Math.cos(perpAngle1));
-    const cp1y = round(centerY + control1Offset * Math.sin(perpAngle1));
-
-    const control2Offset = radius * 0.7;
-    const perpAngle2 = angleRad - Math.PI / 6;
-    const cp2x = round(centerX + control2Offset * Math.cos(perpAngle2));
-    const cp2y = round(centerY + control2Offset * Math.sin(perpAngle2));
-
-    return `M ${centerX} ${centerY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
-  };
-
+export default function ProcessVisualization() {
   return (
-    <div className="relative w-full h-full min-h-[280px] md:min-h-[400px] flex items-center justify-center">
-      <div className="relative w-full aspect-square max-w-[320px] md:max-w-[600px] mx-auto">
-        {/* Tentacle Connection Lines */}
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{ zIndex: 5 }}
-          viewBox="0 0 100 100"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <defs>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="0.5" result="coloredBlur" />
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
+    <div className="relative min-h-[500px] overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-text)] p-5 text-[var(--color-surface)] shadow-[var(--shadow-lg)] sm:p-8">
+      <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.3)_1px,transparent_1px)] [background-size:36px_36px]" />
 
-          {steps.map((step) => {
-            const path = generateTentaclePath(step.angle);
+      <div className="relative flex items-start justify-between gap-6 border-b border-white/15 pb-5">
+        <div>
+          <p className="precision-label !text-white/45">The Loomline</p>
+          <h3 className="mt-2 max-w-md font-[family-name:var(--font-display)] text-3xl leading-none tracking-[-0.03em] sm:text-4xl">
+            One trace through the whole codebase.
+          </h3>
+        </div>
+        <span className="hidden rounded-full border border-white/15 px-3 py-1.5 font-[family-name:var(--font-mono)] text-[9px] uppercase tracking-[0.12em] text-white/55 sm:block">
+          deterministic handoff
+        </span>
+      </div>
 
-            return (
-              <g key={step.id}>
-                {/* Shadow layer - SOLID BLACK */}
-                <path
-                  d={path}
-                  fill="none"
-                  stroke="#1a1a1a"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  opacity="0.5"
-                  filter="url(#glow)"
-                />
-                {/* Main tentacle - SOLID DARK GRAY */}
-                <path
-                  d={path}
-                  fill="none"
-                  stroke="#2d2d2d"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  className="animate-pulse"
-                  style={{
-                    animationDelay: `${step.id * 0.1}s`,
-                    animationDuration: "3s",
-                  }}
-                />
-              </g>
-            );
-          })}
-        </svg>
-
-        {/* Central Octopus Logo */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          style={{ zIndex: 20 }}
-        >
-          <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36">
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-600/40 via-gray-700/50 to-gray-800/40 rounded-2xl md:rounded-3xl blur-xl md:blur-2xl animate-pulse" />
-            <div className="relative w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl md:rounded-3xl border-2 border-gray-700 shadow-2xl flex flex-col items-center justify-center overflow-hidden p-2 sm:p-3">
-              <Image
-                src={logoImage}
-                alt="Octopus Logo"
-                width={160}
-                height={160}
-                className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain"
-                priority
-              />
-            </div>
+      <div className="relative mt-10 grid gap-4 sm:grid-cols-2">
+        <div className="rounded-[var(--radius-md)] border border-white/15 bg-white/[0.05] p-4">
+          <p className="precision-label !text-white/45">Input / issue 4287</p>
+          <p className="mt-3 text-sm leading-6 text-white/80">
+            Add resilient error handling to concurrent payment operations.
+          </p>
+        </div>
+        <div className="rounded-[var(--radius-md)] border border-[var(--color-accent)] bg-[color:rgba(207,82,47,0.12)] p-4">
+          <p className="precision-label !text-white/45">Output / pull 4288</p>
+          <div className="mt-3 flex items-center gap-2 text-sm font-semibold">
+            <GitPullRequest className="h-4 w-4" aria-hidden="true" />
+            Ready for human review
           </div>
         </div>
+      </div>
 
-        {/* Step Icons */}
-        {steps.map((step) => {
-          const angle = (step.angle * Math.PI) / 180;
-          const radius = 37.5;
-          const x = round(50 + radius * Math.cos(angle));
-          const y = round(50 + radius * Math.sin(angle));
-
-          return (
+      <div className="relative mt-8">
+        <div className="absolute left-4 top-4 h-[calc(100%-2rem)] w-px bg-white/20 sm:left-0 sm:right-0 sm:top-4 sm:h-px sm:w-full" />
+        <div className="grid gap-5 sm:grid-cols-4">
+          {stages.map((stage, index) => (
             <div
-              key={step.id}
-              className="absolute group"
-              style={{
-                left: `${x}%`,
-                top: `${y}%`,
-                transform: "translate(-50%, -50%)",
-                zIndex: 10,
-              }}
+              key={stage.label}
+              className="relative flex items-center gap-4 sm:block"
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-700/0 group-hover:from-gray-600/30 group-hover:to-gray-700/40 rounded-xl md:rounded-2xl blur-lg md:blur-xl transition-all duration-300" />
-                <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 lg:w-20 lg:h-20 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl md:rounded-2xl border-2 border-gray-700 shadow-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:border-gray-600 overflow-hidden">
-                  {step.icon ? (
-                    <Image
-                      src={step.icon}
-                      alt={step.title}
-                      width={56}
-                      height={56}
-                      className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 object-contain"
-                    />
-                  ) : (
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-gradient-to-br from-gray-700 to-gray-600 rounded-lg md:rounded-xl flex items-center justify-center">
-                      <span className="text-white font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
-                        {step.id}
-                      </span>
-                    </div>
-                  )}
-                </div>
+              <span
+                className={`relative z-10 flex h-9 w-9 flex-none items-center justify-center rounded-full border ${
+                  index === stages.length - 1
+                    ? "border-[var(--color-accent)] bg-[var(--color-accent)]"
+                    : "border-white/20 bg-[var(--color-text)]"
+                }`}
+              >
+                <stage.icon className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <div className="sm:mt-4">
+                <p className="font-[family-name:var(--font-mono)] text-[9px] uppercase tracking-[0.12em] text-white/40">
+                  0{index + 1}
+                </p>
+                <p className="mt-0.5 text-sm font-semibold">{stage.label}</p>
               </div>
-              {/* Tooltip: render above for bottom-half nodes, below for top-half */}
-              {step.angle >= 135 && step.angle <= 315 ? (
-                <div className="absolute bottom-full mb-2 md:mb-3 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-foreground text-background px-2 py-1 md:px-3 md:py-1 rounded-full text-[10px] sm:text-xs md:text-sm font-sans font-medium">
-                    {step.title}
-                  </div>
-                </div>
-              ) : (
-                <div className="absolute top-full mt-2 md:mt-3 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-foreground text-background px-2 py-1 md:px-3 md:py-1 rounded-full text-[10px] sm:text-xs md:text-sm font-sans font-medium">
-                    {step.title}
-                  </div>
-                </div>
-              )}
             </div>
-          );
-        })}
+          ))}
+        </div>
+      </div>
+
+      <div className="relative mt-10 rounded-[var(--radius-md)] bg-[var(--color-surface)] p-4 text-[var(--color-text)] sm:p-5">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="precision-label">Validation ledger</p>
+            <p className="mt-1 text-sm font-semibold">
+              Type-safe, test-passed, dependency-aware
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {["Types", "Tests", "Imports"].map((item) => (
+              <span
+                key={item}
+                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-rule)] px-2.5 py-1 text-[10px] font-semibold"
+              >
+                <Check
+                  className="h-3 w-3 text-[var(--color-success)]"
+                  aria-hidden="true"
+                />
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
-};
-
-export default ProcessVisualization;
+}

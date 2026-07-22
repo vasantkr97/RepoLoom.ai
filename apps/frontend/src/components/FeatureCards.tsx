@@ -1,221 +1,90 @@
-"use client";
-
-import React from "react";
-import { motion } from "framer-motion";
-import { Search, GitBranch, Code2, Workflow } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Braces, GitPullRequest, Network, ScanSearch } from "lucide-react";
 import ProcessVisualization from "./ProcessVisualization";
 
-const features = [
+const capabilities = [
   {
-    icon: Search,
-    title: "Hybrid Search",
+    number: "01",
+    icon: ScanSearch,
+    title: "Hybrid retrieval",
     description:
-      "BM25 keyword search + vector embeddings combined with RRF ranking. Finds exactly the right files, every time.",
+      "Keyword precision and semantic search are fused to locate the files that matter without flooding the model with noise.",
   },
   {
-    icon: Code2,
-    title: "Deep Code Understanding",
+    number: "02",
+    icon: Network,
+    title: "Dependency awareness",
     description:
-      "AST parsing builds code graphs to understand imports, dependencies, and function relationships across your codebase.",
+      "AST and code-graph analysis preserve the relationships between imports, functions, types, and call sites.",
   },
   {
-    icon: Workflow,
-    title: "Incremental Indexing",
+    number: "03",
+    icon: Braces,
+    title: "Scoped generation",
     description:
-      "Only changed files are re-indexed. Embeddings stay fresh without reprocessing your entire repository.",
+      "RepoLoom writes against the relevant implementation surface instead of treating every task like a blank prompt.",
   },
   {
-    icon: GitBranch,
-    title: "Validated PR Creation",
+    number: "04",
+    icon: GitPullRequest,
+    title: "Validated delivery",
     description:
-      "Every change is tested in an isolated sandbox before a production-ready pull request is created.",
+      "Generated changes run through syntax, type, consistency, and sandbox checks before the pull request is opened.",
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
-const FeatureCards = () => {
+export default function FeatureCards() {
   return (
-    <section className="py-6 md:py-16 px-3 md:px-8 lg:px-12 bg-background overflow-hidden">
-      <div className="max-w-[1600px] mx-auto">
-        {/* Mobile View - Stacked */}
-        <motion.div
-          className="block md:hidden space-y-4"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={containerVariants}
-        >
-          {/* Process Visualization - Full Width on Mobile */}
-          <div className="w-full flex items-center justify-center py-4">
+    <section
+      id="product"
+      className="bg-[var(--color-surface)] px-4 py-20 sm:px-6 sm:py-28 lg:px-10 lg:py-36"
+    >
+      <div className="mx-auto max-w-[1440px]">
+        <div className="mb-12 grid gap-6 border-b border-[var(--color-rule-strong)] pb-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <p className="precision-label mb-4">Product system</p>
+            <h2 className="max-w-4xl font-[family-name:var(--font-display)] text-[clamp(3rem,6vw,6rem)] leading-[0.9] tracking-[-0.045em]">
+              Context is the difference between code and contribution.
+            </h2>
+          </div>
+          <p className="max-w-xl text-base leading-7 text-[var(--color-muted)] lg:col-span-5 lg:justify-self-end lg:text-lg">
+            Each layer exists to reduce uncertainty: find the right surface,
+            understand its dependencies, make the smallest coherent change, and
+            prove it works.
+          </p>
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-7">
             <ProcessVisualization />
           </div>
-
-          {/* Feature Cards - Stacked on Mobile */}
-          {features.map((feature, index) => (
-            <motion.div key={index} variants={cardVariants}>
-              <Card className="bg-white border-foreground shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 rounded-xl">
-                <CardContent className="p-3 flex items-start gap-3">
-                  {React.createElement(feature.icon, {
-                    className:
-                      "w-7 h-7 stroke-[1.5] text-foreground flex-shrink-0 mt-0.5",
-                  })}
-                  <div className="min-w-0">
-                    <h3 className="font-sans text-sm font-bold mb-0.5 text-foreground">
-                      {feature.title}
-                    </h3>
-                    <p className="font-sans text-xs leading-relaxed text-foreground">
-                      {feature.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Desktop View - Bento Grid with reduced height */}
-        <div className="hidden md:grid md:grid-cols-4 gap-4 md:auto-rows-[200px] lg:auto-rows-[220px]">
-          {/* Process Visualization */}
-          <motion.div
-            className="md:col-span-2 md:row-span-2 flex items-center justify-center"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            <ProcessVisualization />
-          </motion.div>
-
-          {/* Card 1 - Top Right */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="md:col-span-1 md:row-span-1"
-          >
-            <Card className="h-full bg-white border-foreground shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 rounded-2xl overflow-hidden">
-              <CardContent className="p-4 lg:p-5 h-full flex flex-col">
-                {React.createElement(features[0].icon, {
-                  className:
-                    "w-8 h-8 lg:w-10 lg:h-10 mb-2 stroke-[1.5] text-foreground flex-shrink-0",
-                })}
-                <div className="flex-1 flex flex-col">
-                  <h3 className="font-sans text-base lg:text-lg font-bold mb-1 text-foreground">
-                    {features[0].title}
+          <div className="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)] lg:col-span-5">
+            {capabilities.map((capability) => (
+              <article
+                key={capability.number}
+                className="group grid grid-cols-[auto_1fr] gap-4 py-6 transition-colors duration-[var(--duration-base)] hover:bg-[var(--color-bg)] sm:gap-6 sm:px-4"
+              >
+                <div className="flex flex-col items-center gap-3">
+                  <span className="font-[family-name:var(--font-mono)] text-[9px] font-bold text-[var(--color-accent)]">
+                    {capability.number}
+                  </span>
+                  <capability.icon
+                    className="h-5 w-5 text-[var(--color-muted)] transition-colors group-hover:text-[var(--color-text)]"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold tracking-[-0.03em]">
+                    {capability.title}
                   </h3>
-                  <p className="font-sans text-xs lg:text-sm leading-relaxed text-foreground">
-                    {features[0].description}
+                  <p className="mt-2 text-sm leading-6 text-[var(--color-muted)] sm:text-base sm:leading-7">
+                    {capability.description}
                   </p>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Card 2 - Top Far Right */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="md:col-span-1 md:row-span-1"
-          >
-            <Card className="h-full bg-white border-foreground shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 rounded-2xl overflow-hidden">
-              <CardContent className="p-4 lg:p-5 h-full flex flex-col">
-                {React.createElement(features[1].icon, {
-                  className:
-                    "w-8 h-8 lg:w-10 lg:h-10 mb-2 stroke-[1.5] text-foreground flex-shrink-0",
-                })}
-                <div className="flex-1 flex flex-col">
-                  <h3 className="font-sans text-base lg:text-lg font-bold mb-1 text-foreground">
-                    {features[1].title}
-                  </h3>
-                  <p className="font-sans text-xs lg:text-sm leading-relaxed text-foreground">
-                    {features[1].description}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Card 3 - Bottom Right */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="md:col-span-1 md:row-span-1"
-          >
-            <Card className="h-full bg-white border-foreground shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 rounded-2xl overflow-hidden">
-              <CardContent className="p-4 lg:p-5 h-full flex flex-col">
-                {React.createElement(features[2].icon, {
-                  className:
-                    "w-8 h-8 lg:w-10 lg:h-10 mb-2 stroke-[1.5] text-foreground flex-shrink-0",
-                })}
-                <div className="flex-1 flex flex-col">
-                  <h3 className="font-sans text-base lg:text-lg font-bold mb-1 text-foreground">
-                    {features[2].title}
-                  </h3>
-                  <p className="font-sans text-xs lg:text-sm leading-relaxed text-foreground">
-                    {features[2].description}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Card 4 - Bottom Far Right */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="md:col-span-1 md:row-span-1"
-          >
-            <Card className="h-full bg-white border-foreground shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 rounded-2xl overflow-hidden">
-              <CardContent className="p-4 lg:p-5 h-full flex flex-col">
-                {React.createElement(features[3].icon, {
-                  className:
-                    "w-8 h-8 lg:w-10 lg:h-10 mb-2 stroke-[1.5] text-foreground flex-shrink-0",
-                })}
-                <div className="flex-1 flex flex-col">
-                  <h3 className="font-sans text-base lg:text-lg font-bold mb-1 text-foreground">
-                    {features[3].title}
-                  </h3>
-                  <p className="font-sans text-xs lg:text-sm leading-relaxed text-foreground">
-                    {features[3].description}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default FeatureCards;
+}

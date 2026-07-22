@@ -1,9 +1,5 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
-import { FileText, BookOpen, Boxes, ExternalLink, Github } from "lucide-react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
+import { ArrowUpRight, BookOpen, Boxes, FileText } from "lucide-react";
 import architecture from "../assets/Architecture.png";
 
 interface ReferenceItem {
@@ -11,21 +7,21 @@ interface ReferenceItem {
   url: string;
 }
 
-import type { StaticImageData } from "next/image";
-
 interface Reference {
+  number: string;
   icon: React.ComponentType<{ className?: string }>;
   title: string;
   description: string;
   items: ReferenceItem[];
-  image?: string | StaticImageData;
+  image?: StaticImageData;
 }
 
 const references: Reference[] = [
   {
+    number: "01",
     icon: FileText,
-    title: "Research Papers",
-    description: "Academic research powering our AI code generation.",
+    title: "Research",
+    description: "The retrieval and issue-resolution work behind the system.",
     items: [
       {
         title: "SWE-Fixer: LLMs for GitHub Issue Resolution",
@@ -38,9 +34,10 @@ const references: Reference[] = [
     ],
   },
   {
+    number: "02",
     icon: BookOpen,
-    title: "Technical Blogs",
-    description: "Deep dives into hybrid search and BM25+Vector retrieval.",
+    title: "Retrieval notes",
+    description: "Practical foundations for hybrid code search and ranking.",
     items: [
       {
         title: "Why Grep-Only Retrieval Falls Short",
@@ -57,13 +54,13 @@ const references: Reference[] = [
     ],
   },
   {
+    number: "03",
     icon: Boxes,
     title: "Architecture",
-    description:
-      "LangGraph workflows, hybrid retrieval, and sandboxed execution.",
+    description: "The services, queues, retrieval layers, and validation loop.",
     items: [
       {
-        title: "View on GitHub",
+        title: "Inspect the source repository",
         url: "https://github.com/Deepak7704/100xSWE",
       },
     ],
@@ -71,94 +68,80 @@ const references: Reference[] = [
   },
 ];
 
-const References = () => {
+export default function References() {
   return (
-    <section className="py-12 md:py-16 px-4 md:px-8 lg:px-12 bg-background">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-10">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 text-foreground">
-            Built on Strong Foundations
-          </h2>
-          <p className="font-sans text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-            Research, resources, and architecture powering this AI assistant
+    <section className="bg-[var(--color-surface)] px-4 py-20 sm:px-6 sm:py-28 lg:px-10 lg:py-32">
+      <div className="mx-auto max-w-[1440px]">
+        <div className="grid gap-6 border-b border-[var(--color-rule-strong)] pb-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-8">
+            <p className="precision-label mb-4">Evidence ledger</p>
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(3rem,6vw,6rem)] leading-[0.9] tracking-[-0.045em]">
+              Built from evidence,
+              <span className="block text-[var(--color-muted)]">
+                not AI folklore.
+              </span>
+            </h2>
+          </div>
+          <p className="max-w-lg text-base leading-7 text-[var(--color-muted)] lg:col-span-4 lg:justify-self-end">
+            RepoLoom’s choices are inspectable—from retrieval research to the
+            architecture that turns a task into a tested pull request.
           </p>
         </div>
 
-        {/* Reference Cards - Compact Apple-style Design */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {references.map((ref, index) => (
-            <motion.div
-              key={index}
-              whileHover={{
-                y: -6,
-                transition: { duration: 0.25, ease: "easeOut" },
-              }}
-              whileTap={{ scale: 0.98 }}
+        <div className="grid gap-px overflow-hidden border-x border-b border-[var(--color-rule)] bg-[var(--color-rule)] lg:grid-cols-3">
+          {references.map((reference) => (
+            <article
+              key={reference.number}
+              className="flex min-h-[360px] flex-col bg-[var(--color-surface)] p-5 transition-colors duration-[var(--duration-base)] hover:bg-[var(--color-bg)] sm:p-7"
             >
-              <Card className="h-full bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group">
-                {/* Compact Header */}
-                <div className="bg-foreground px-5 py-4 flex items-center gap-3 group-hover:bg-gray-800 transition-colors duration-300">
-                  <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                    <ref.icon className="w-5 h-5 text-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="font-sans text-base font-semibold text-background leading-tight">
-                      {ref.title}
-                    </h3>
-                    <p className="font-sans text-xs text-gray-400 mt-0.5">
-                      {ref.description}
-                    </p>
-                  </div>
-                </div>
+              <div className="flex items-start justify-between">
+                <span className="font-[family-name:var(--font-mono)] text-[10px] font-bold text-[var(--color-accent)]">
+                  {reference.number}
+                </span>
+                <reference.icon
+                  className="h-5 w-5 text-[var(--color-muted)]"
+                  aria-hidden="true"
+                />
+              </div>
+              <h3 className="mt-8 text-2xl font-semibold tracking-[-0.035em]">
+                {reference.title}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--color-muted)]">
+                {reference.description}
+              </p>
 
-                {/* Card Content */}
-                <div className="px-5 py-4 bg-white">
-                  {/* Architecture Image - Smaller */}
-                  {ref.image && (
-                    <a
-                      href={ref.items[0]?.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mb-3 block rounded-lg overflow-hidden border border-gray-100 hover:border-gray-300 transition-colors"
-                    >
-                      <Image
-                        src={ref.image}
-                        alt="System Architecture"
-                        width={300}
-                        height={180}
-                        className="w-full h-32 object-cover"
-                      />
-                    </a>
-                  )}
-
-                  {/* Reference Items - Compact List */}
-                  <div className="space-y-2">
-                    {ref.items.map((item, itemIndex) => (
-                      <motion.a
-                        key={itemIndex}
-                        href={item.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 group/item"
-                        whileHover={{ x: 4 }}
-                        transition={{ duration: 0.15 }}
-                      >
-                        <ExternalLink className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 group-hover/item:text-foreground transition-colors" />
-                        <span className="font-sans text-xs text-gray-600 group-hover/item:text-foreground transition-colors line-clamp-1">
-                          {item.title}
-                        </span>
-                      </motion.a>
-                    ))}
-                  </div>
+              {reference.image && (
+                <div className="relative mt-5 aspect-[16/8] overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-rule)] bg-white">
+                  <Image
+                    src={reference.image}
+                    alt="RepoLoom system architecture preview"
+                    fill
+                    className="object-cover object-top opacity-80 grayscale transition duration-[var(--duration-base)] hover:opacity-100 hover:grayscale-0"
+                  />
                 </div>
-              </Card>
-            </motion.div>
+              )}
+
+              <div className="mt-auto divide-y divide-[var(--color-rule)] border-t border-[var(--color-rule)] pt-2">
+                {reference.items.map((item) => (
+                  <a
+                    key={item.title}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex min-h-11 items-center justify-between gap-3 py-2 text-xs font-semibold leading-5 transition-colors hover:text-[var(--color-accent)]"
+                  >
+                    <span>{item.title}</span>
+                    <ArrowUpRight
+                      className="h-3.5 w-3.5 flex-none transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </a>
+                ))}
+              </div>
+            </article>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default References;
+}

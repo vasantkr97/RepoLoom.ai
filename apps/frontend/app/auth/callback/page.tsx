@@ -3,6 +3,8 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import BrandMark from "@/components/BrandMark";
+import { Loader2, ShieldCheck } from "lucide-react";
 
 function OAuthCallbackContent() {
   const router = useRouter();
@@ -99,17 +101,10 @@ function OAuthCallbackContent() {
   }, [searchParams, login, router, mode]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-        <h2 className="text-xl font-semibold text-gray-900">
-          Processing login...
-        </h2>
-        <p className="text-gray-600 mt-2">
-          Please wait while we complete your authentication
-        </p>
-      </div>
-    </div>
+    <CallbackFrame
+      title="Securing your workspace"
+      detail="Completing the GitHub authentication handoff."
+    />
   );
 }
 
@@ -117,15 +112,37 @@ export default function OAuthCallback() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-            <h2 className="text-xl font-semibold text-gray-900">Loading...</h2>
-          </div>
-        </div>
+        <CallbackFrame
+          title="Opening authentication"
+          detail="Preparing the secure GitHub handoff."
+        />
       }
     >
       <OAuthCallbackContent />
     </Suspense>
+  );
+}
+
+function CallbackFrame({ title, detail }: { title: string; detail: string }) {
+  return (
+    <main className="precision-canvas flex min-h-screen items-center justify-center px-4 py-12">
+      <div className="w-full max-w-xl rounded-[var(--radius-lg)] border border-[var(--color-rule-strong)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-lg)] sm:p-8">
+        <BrandMark />
+        <div className="relative mt-12 flex h-16 w-16 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-text)] text-[var(--color-surface)]">
+          <ShieldCheck className="h-6 w-6" aria-hidden="true" />
+          <Loader2 className="absolute -right-2 -top-2 h-5 w-5 animate-spin rounded-full bg-[var(--color-accent)] p-1 text-white" />
+        </div>
+        <p className="precision-label mt-7">Authentication trace</p>
+        <h1 className="mt-2 font-[family-name:var(--font-display)] text-5xl leading-[0.92] tracking-[-0.045em]">
+          {title}
+        </h1>
+        <p className="mt-4 text-sm leading-6 text-[var(--color-muted)]">
+          {detail}
+        </p>
+        <div className="mt-8 h-px overflow-hidden bg-[var(--color-rule)]">
+          <div className="h-full w-2/3 bg-[var(--color-accent)] motion-safe:animate-pulse" />
+        </div>
+      </div>
+    </main>
   );
 }
