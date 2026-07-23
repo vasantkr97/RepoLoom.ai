@@ -1,57 +1,63 @@
 const phases = [
   {
     number: "01",
-    title: "Frame the intent",
+    title: "Scoped file changes",
     detail:
-      "The issue becomes an explicit, repository-scoped implementation brief.",
+      "A focused diff shows exactly which files and lines RepoLoom changed.",
   },
   {
     number: "02",
-    title: "Assemble context",
+    title: "Change explanation",
     detail:
-      "Hybrid retrieval and the code graph expose the smallest coherent change surface.",
+      "A concise summary connects the implementation back to the original task.",
   },
   {
     number: "03",
-    title: "Generate and challenge",
+    title: "Validation result",
     detail:
-      "The change is produced, checked, and retried against concrete failures.",
+      "Syntax and type checks make the handoff state explicit before review.",
   },
   {
     number: "04",
-    title: "Hand off evidence",
+    title: "Pull request",
     detail:
-      "The pull request arrives with a readable diff and validation trace.",
+      "The final branch and pull request remain under the engineer’s control.",
   },
 ];
 
 export default function LangGraphFlow() {
   return (
-    <div className="border-y border-[var(--color-rule-strong)]">
+    <ol
+      className="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule-strong)]"
+      aria-label="RepoLoom review output"
+    >
       {phases.map((phase, index) => (
-        <div
+        <li
           key={phase.number}
-          className="group grid grid-cols-[auto_1fr] gap-4 border-b border-[var(--color-rule)] py-5 last:border-b-0 sm:gap-6 sm:py-6"
+          className="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 py-3.5 sm:py-4"
         >
           <span
-            className={`flex h-9 w-9 items-center justify-center rounded-full font-[family-name:var(--font-mono)] text-[9px] font-bold transition-colors ${
+            className={`flex h-8 w-8 items-center justify-center rounded-[0.7rem] font-[family-name:var(--font-mono)] text-[9px] font-bold ${
               index === phases.length - 1
-                ? "bg-[var(--color-accent)] text-white"
-                : "border border-[var(--color-rule-strong)] group-hover:border-[var(--color-text)]"
+                ? "bg-[var(--color-copper)] text-white"
+                : "border border-[var(--color-rule)] bg-[var(--color-bg)] text-[var(--color-accent)]"
             }`}
           >
             {phase.number}
           </span>
           <div>
-            <h3 className="text-lg font-semibold tracking-[-0.025em]">
+            <h3 className="text-base font-semibold tracking-[-0.02em]">
               {phase.title}
             </h3>
-            <p className="mt-1 text-sm leading-6 text-[var(--color-muted)]">
+            <p className="mt-0.5 text-[13px] leading-5 text-[var(--color-muted)]">
               {phase.detail}
             </p>
           </div>
-        </div>
+          <span className="hidden font-[family-name:var(--font-mono)] text-[9px] font-bold uppercase tracking-[0.1em] text-[var(--color-muted)] sm:block">
+            Included
+          </span>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }

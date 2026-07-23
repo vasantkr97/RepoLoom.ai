@@ -1,6 +1,4 @@
-import Image, { StaticImageData } from "next/image";
 import { ArrowUpRight, BookOpen, Boxes, FileText } from "lucide-react";
-import architecture from "../assets/Architecture.png";
 
 interface ReferenceItem {
   title: string;
@@ -13,7 +11,6 @@ interface Reference {
   title: string;
   description: string;
   items: ReferenceItem[];
-  image?: StaticImageData;
 }
 
 const references: Reference[] = [
@@ -64,21 +61,22 @@ const references: Reference[] = [
         url: "https://github.com/Deepak7704/100xSWE",
       },
     ],
-    image: architecture,
   },
 ];
 
 export default function References() {
   return (
-    <section className="bg-[var(--color-surface)] px-4 py-20 sm:px-6 sm:py-28 lg:px-10 lg:py-32">
-      <div className="mx-auto max-w-[1440px]">
-        <div className="grid gap-6 border-b border-[var(--color-rule-strong)] pb-8 lg:grid-cols-12 lg:items-end">
+    <section className="bg-[var(--color-surface)] px-4 py-16 sm:px-6 sm:py-20 lg:px-10 lg:py-24">
+      <div className="mx-auto max-w-[1240px]">
+        <div className="grid gap-7 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
-            <p className="precision-label mb-4">Evidence ledger</p>
-            <h2 className="font-[family-name:var(--font-display)] text-[clamp(3rem,6vw,6rem)] leading-[0.9] tracking-[-0.045em]">
-              Built from evidence,
+            <p className="precision-label mb-4 text-[var(--color-accent)]">
+              Evidence ledger
+            </p>
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.96] tracking-[-0.04em]">
+              Inspect the thinking,
               <span className="block text-[var(--color-muted)]">
-                not AI folklore.
+                not just the output.
               </span>
             </h2>
           </div>
@@ -88,38 +86,29 @@ export default function References() {
           </p>
         </div>
 
-        <div className="grid gap-px overflow-hidden border-x border-b border-[var(--color-rule)] bg-[var(--color-rule)] lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 lg:grid-cols-12">
           {references.map((reference) => (
             <article
               key={reference.number}
-              className="flex min-h-[360px] flex-col bg-[var(--color-surface)] p-5 transition-colors duration-[var(--duration-base)] hover:bg-[var(--color-bg)] sm:p-7"
+              className="group flex min-h-[280px] flex-col rounded-[var(--radius-lg)] border border-[var(--color-rule)] bg-[var(--color-bg)] p-5 transition duration-[var(--duration-base)] hover:-translate-y-0.5 hover:border-[var(--color-rule-strong)] hover:bg-[var(--color-surface)] hover:shadow-[var(--shadow-md)] sm:p-6 lg:col-span-4"
             >
               <div className="flex items-start justify-between">
-                <span className="font-[family-name:var(--font-mono)] text-[10px] font-bold text-[var(--color-accent)]">
+                <span className="rounded-full bg-[var(--color-accent-soft)] px-3 py-1 font-[family-name:var(--font-mono)] text-[10px] font-bold text-[var(--color-accent)]">
                   {reference.number}
                 </span>
-                <reference.icon
-                  className="h-5 w-5 text-[var(--color-muted)]"
-                  aria-hidden="true"
-                />
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+                  <reference.icon
+                    className="h-4 w-4 text-[var(--color-muted)]"
+                    aria-hidden="true"
+                  />
+                </span>
               </div>
-              <h3 className="mt-8 text-2xl font-semibold tracking-[-0.035em]">
+              <h3 className="mt-6 text-xl font-semibold tracking-[-0.03em]">
                 {reference.title}
               </h3>
               <p className="mt-2 text-sm leading-6 text-[var(--color-muted)]">
                 {reference.description}
               </p>
-
-              {reference.image && (
-                <div className="relative mt-5 aspect-[16/8] overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-rule)] bg-white">
-                  <Image
-                    src={reference.image}
-                    alt="RepoLoom system architecture preview"
-                    fill
-                    className="object-cover object-top opacity-80 grayscale transition duration-[var(--duration-base)] hover:opacity-100 hover:grayscale-0"
-                  />
-                </div>
-              )}
 
               <div className="mt-auto divide-y divide-[var(--color-rule)] border-t border-[var(--color-rule)] pt-2">
                 {reference.items.map((item) => (
@@ -128,11 +117,11 @@ export default function References() {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex min-h-11 items-center justify-between gap-3 py-2 text-xs font-semibold leading-5 transition-colors hover:text-[var(--color-accent)]"
+                    className="group/link flex min-h-11 items-center justify-between gap-3 rounded-lg px-1 py-2 text-xs font-semibold leading-5 transition-colors hover:text-[var(--color-accent)]"
                   >
                     <span>{item.title}</span>
                     <ArrowUpRight
-                      className="h-3.5 w-3.5 flex-none transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      className="h-3.5 w-3.5 flex-none transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
                       aria-hidden="true"
                     />
                   </a>

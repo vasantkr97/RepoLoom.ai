@@ -5,8 +5,8 @@ import Link from "next/link";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 
 const navigation = [
-  { label: "Product", href: "/#product" },
-  { label: "Method", href: "/#method" },
+  { label: "How it works", href: "/#product" },
+  { label: "Review output", href: "/#method" },
   { label: "Documentation", href: "/documentation" },
   { label: "Workspace", href: "/dashboard" },
 ];
