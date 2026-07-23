@@ -20,8 +20,8 @@
     --color-rule-strong: rgba(11, 20, 17, 0.32);
 
     /* Precision Loom — typography */
-    --font-display: var(--font-instrument-serif), Georgia, serif;
-    --font-body: var(--font-space-grotesk), "Trebuchet MS", sans-serif;
+    --font-display: var(--font-outfit), "Avenir Next", sans-serif;
+    --font-body: var(--font-manrope), "Avenir Next", sans-serif;
     --font-mono:
       "IBM Plex Mono", "Cascadia Code", "SFMono-Regular", Consolas, monospace;
     --text-xs: 0.75rem;
