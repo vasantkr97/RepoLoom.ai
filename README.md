@@ -1,6 +1,6 @@
-# 100xSWE
+# RepoLoom.ai
 
-![100xSWE](apps/frontend/public/Architecture.png)
+![RepoLoom.ai system architecture](apps/frontend/public/repoloom-architecture.svg)
 
 ### AI-Powered Software Engineering Agent
 
@@ -29,7 +29,7 @@ An intelligent autonomous agent that understands your codebase, identifies relev
 
 ## Overview
 
-100xSWE is an autonomous software engineering agent that combines advanced AI techniques to understand and modify codebases intelligently. It uses a sophisticated pipeline that includes:
+RepoLoom.ai is an autonomous software engineering agent that combines advanced AI techniques to understand and modify codebases intelligently. It uses a sophisticated pipeline that includes:
 
 - **Hybrid Search**: Combining BM25 (keyword-based) and vector embeddings (semantic) for optimal code retrieval
 - **AST Analysis**: Understanding code structure and dependencies using Abstract Syntax Trees
@@ -42,18 +42,21 @@ An intelligent autonomous agent that understands your codebase, identifies relev
 ## Key Features
 
 ### Intelligent Code Understanding
+
 - **Smart Chunking**: Analyzes code at function and class level for precise context
 - **Hybrid Search**: Reciprocal Rank Fusion (RRF) combines BM25 and vector search results
 - **Dependency Analysis**: AST-based code graph to find all dependent files
 - **Context-Aware**: Understands relationships between different parts of the codebase
 
 ### Automated Code Generation
+
 - **Task-Based Generation**: Provide a natural language task, get code changes
 - **Multi-File Edits**: Handles changes across multiple related files
 - **Code Validation**: Validates syntax and runs tests in sandboxed environments
 - **PR Creation**: Automatically creates pull requests with generated changes
 
 ### Scalable Architecture
+
 - **Queue-Based Processing**: BullMQ for reliable job processing
 - **Redis Caching**: Fast BM25 index storage and retrieval
 - **Pinecone Vector DB**: Efficient semantic search at scale
@@ -93,12 +96,14 @@ The system follows a multi-stage pipeline:
 ## Tech Stack
 
 ### Frontend
+
 - **Next.js 16** - React framework with App Router
 - **React 19** - Latest React with concurrent features
 - **TypeScript** - Type-safe development
 - **Tailwind CSS 4** - Utility-first styling
 
 ### Backend (Primary)
+
 - **Bun** - Fast JavaScript runtime
 - **Express** - Web framework
 - **BullMQ** - Job queue management
@@ -106,6 +111,7 @@ The system follows a multi-stage pipeline:
 - **TypeScript** - Type safety
 
 ### Worker
+
 - **Bun** - Runtime environment
 - **LangChain & LangGraph** - AI orchestration
 - **Pinecone** - Vector database
@@ -187,6 +193,7 @@ cd OpenSWE
 ### 2. Install dependencies
 
 #### Frontend
+
 ```bash
 cd frontend
 npm install
@@ -195,12 +202,14 @@ bun install
 ```
 
 #### Primary Backend
+
 ```bash
 cd primary_backend
 bun install
 ```
 
 #### Worker
+
 ```bash
 cd worker
 bun install
@@ -215,6 +224,7 @@ bun install
 Create `.env` files in each service directory:
 
 #### Primary Backend (`.env`)
+
 ```env
 PORT=3000
 REDIS_HOST=localhost
@@ -224,6 +234,7 @@ FRONTEND_URL=http://localhost:3001
 ```
 
 #### Worker (`.env`)
+
 ```env
 # Redis
 REDIS_HOST=localhost
@@ -250,6 +261,7 @@ DAYTONA_API_KEY=your_daytona_key
 ```
 
 #### Frontend (`.env.local`)
+
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
@@ -261,11 +273,13 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 ### Start Services
 
 #### 1. Start Redis
+
 ```bash
 redis-server
 ```
 
 #### 2. Start Primary Backend
+
 ```bash
 cd primary_backend
 bun run dev
@@ -274,12 +288,14 @@ bun run dev
 Server will start on `http://localhost:3000`
 
 #### 3. Start Worker
+
 ```bash
 cd worker
 bun run dev
 ```
 
 #### 4. Start Frontend
+
 ```bash
 cd frontend
 npm run dev
@@ -292,6 +308,7 @@ Frontend will start on `http://localhost:3001`
 ### Using the API
 
 #### Index a Repository
+
 ```bash
 curl -X POST http://localhost:3000/api/chat \
   -H "Content-Type: application/json" \
@@ -302,6 +319,7 @@ curl -X POST http://localhost:3000/api/chat \
 ```
 
 #### Check Job Status
+
 ```bash
 curl http://localhost:3000/api/status/{jobId}
 ```
@@ -311,9 +329,11 @@ curl http://localhost:3000/api/status/{jobId}
 ## API Endpoints
 
 ### POST `/api/chat`
+
 Submit a code generation task
 
 **Request Body:**
+
 ```json
 {
   "repoUrl": "https://github.com/owner/repo",
@@ -322,6 +342,7 @@ Submit a code generation task
 ```
 
 **Response:**
+
 ```json
 {
   "message": "Task queued",
@@ -333,9 +354,11 @@ Submit a code generation task
 ```
 
 ### GET `/api/status/:jobId`
+
 Check job status and get results
 
 **Response:**
+
 ```json
 {
   "jobId": "123",
@@ -350,6 +373,7 @@ Check job status and get results
 ```
 
 ### GET `/health`
+
 Health check endpoint
 
 ---
@@ -357,7 +381,9 @@ Health check endpoint
 ## How It Works
 
 ### 1. Repository Indexing
+
 When a new repository is provided:
+
 - Clones the repository from GitHub
 - Chunks code intelligently (functions, classes, modules)
 - Generates embeddings using OpenAI/Google AI
@@ -365,7 +391,9 @@ When a new repository is provided:
 - Builds BM25 index and stores in Redis
 
 ### 2. Query Processing
+
 When a task is submitted:
+
 - Generates query embedding
 - Performs vector search in Pinecone
 - Performs BM25 keyword search in Redis
@@ -373,14 +401,18 @@ When a task is submitted:
 - Returns top N most relevant code chunks
 
 ### 3. Code Analysis
+
 For candidate files:
+
 - Parses code into AST using Babel
 - Builds code graph showing dependencies
 - Identifies all files that need to be modified
 - Extracts context (imports, types, signatures)
 
 ### 4. Code Generation
+
 With full context:
+
 - LLM generates code changes
 - Validates syntax and structure
 - Tests in E2B sandbox environment
@@ -396,6 +428,7 @@ RRF_score = Σ(1 / (k + rank_i))
 ```
 
 Where:
+
 - `k = 60` (RRF constant)
 - `rank_i` is the rank from each search method
 - Higher scores indicate better matches
@@ -405,6 +438,7 @@ Where:
 ## Development
 
 ### Running Tests
+
 ```bash
 # Worker tests
 cd worker
@@ -436,6 +470,7 @@ bun run build
 ```
 
 ### Code Quality
+
 ```bash
 # Linting
 npm run lint
@@ -443,4 +478,3 @@ npm run lint
 # Type checking
 tsc --noEmit
 ```
-

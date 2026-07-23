@@ -6,7 +6,7 @@ export default function CodeDemo() {
   return (
     <section
       id="method"
-      className="precision-canvas px-4 py-14 sm:px-6 sm:py-[72px] lg:px-10 lg:py-20"
+      className="precision-canvas px-4 py-12 sm:px-6 sm:py-14 lg:px-10 lg:py-16"
     >
       <div className="mx-auto grid max-w-[1180px] gap-9 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-5 lg:py-4">

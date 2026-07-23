@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   Code,
@@ -29,42 +28,71 @@ const documentationNav = [
 
 export default function DocumentationPage() {
   return (
-    <div className="docs-shell precision-canvas min-h-screen text-[var(--color-text)]">
-      <header className="border-b border-[var(--color-rule-strong)] bg-[color:rgba(241,238,229,0.94)] backdrop-blur-md">
-        <div className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-10">
-          <div className="flex items-center justify-between gap-4">
-            <Link href="/" aria-label="RepoLoom.ai home">
-              <BrandMark />
+    <div className="loomed-landing docs-shell precision-canvas min-h-screen text-[var(--color-text)]">
+      <header className="px-3 pt-3 sm:px-5 sm:pt-4">
+        <div className="mx-auto flex min-h-14 max-w-[1180px] items-center justify-between gap-4 rounded-full border border-[var(--color-rule)] bg-[color:rgba(250,251,249,0.88)] px-4 shadow-[var(--shadow-sm)] backdrop-blur-xl sm:px-5">
+          <Link href="/" aria-label="RepoLoom.ai home">
+            <BrandMark />
+          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/"
+              className="hidden min-h-10 items-center rounded-full px-4 text-sm font-semibold text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)] sm:inline-flex"
+            >
+              Back to product
             </Link>
             <Link
               href="/dashboard"
-              className="inline-flex min-h-11 items-center rounded-[var(--radius-md)] bg-[var(--color-text)] px-4 text-sm font-bold text-[var(--color-surface)] transition hover:bg-[var(--color-accent)] active:translate-y-px"
+              className="loom-button inline-flex min-h-10 items-center rounded-full bg-[var(--color-text)] px-4 text-sm font-bold text-[var(--color-surface)] hover:bg-[var(--color-accent-strong)]"
             >
               Open workspace
             </Link>
           </div>
-          <div className="mt-14 grid gap-6 lg:grid-cols-12 lg:items-end">
+        </div>
+
+        <div className="mx-auto max-w-[1180px] px-2 pb-12 pt-14 sm:px-4 sm:pb-16 sm:pt-20 lg:pt-24">
+          <div className="mb-6 flex justify-center sm:justify-start">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-rule)] bg-[color:rgba(250,251,249,0.76)] px-3 py-1.5 shadow-[var(--shadow-sm)] backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+              <span className="precision-label">Technical field guide</span>
+            </div>
+          </div>
+          <div className="grid gap-7 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
-              <p className="precision-label mb-4">Technical field guide / 01</p>
-              <h1 className="font-[family-name:var(--font-display)] text-[clamp(4rem,8vw,8rem)] leading-[0.83] tracking-[-0.055em]">
-                How RepoLoom
+              <h1 className="max-w-[850px] font-[family-name:var(--font-display)] text-[clamp(3.1rem,6.5vw,5.6rem)] font-semibold leading-[0.94] tracking-[-0.052em]">
+                See the system
                 <span className="block text-[var(--color-accent)]">
-                  thinks in code.
+                  behind the pull request.
                 </span>
               </h1>
             </div>
             <p className="max-w-xl text-base leading-7 text-[var(--color-muted)] lg:col-span-4 lg:justify-self-end lg:text-lg">
-              The architecture, retrieval method, orchestration, validation, and
-              operating constraints behind a review-ready pull request.
+              A precise guide to repository indexing, hybrid retrieval,
+              AST-aware context, isolated validation, and delivery to GitHub.
             </p>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto grid max-w-[1440px] gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:px-10 lg:py-16">
+      <nav
+        className="mx-3 mb-8 flex gap-1 overflow-x-auto rounded-2xl border border-[var(--color-rule)] bg-[color:rgba(250,251,249,0.8)] p-1.5 shadow-[var(--shadow-sm)] backdrop-blur lg:hidden"
+        aria-label="Documentation sections"
+      >
+        {documentationNav.map(([id, label]) => (
+          <a
+            key={id}
+            href={`#${id}`}
+            className="whitespace-nowrap rounded-xl px-3 py-2 text-xs font-bold text-[var(--color-muted)] transition-colors hover:bg-[var(--color-accent-soft)] hover:text-[var(--color-text)]"
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+
+      <main className="mx-auto grid max-w-[1180px] gap-10 px-4 pb-16 sm:px-6 lg:grid-cols-[190px_minmax(0,1fr)] lg:gap-14 lg:px-4 lg:pb-24">
         <aside className="hidden lg:block">
           <nav
-            className="sticky top-8 border-l border-[var(--color-rule-strong)] pl-5"
+            className="sticky top-8 rounded-[var(--radius-lg)] border border-[var(--color-rule)] bg-[color:rgba(250,251,249,0.74)] p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl"
             aria-label="Documentation sections"
           >
             <p className="precision-label mb-4">On this page</p>
@@ -73,7 +101,7 @@ export default function DocumentationPage() {
                 <a
                   key={id}
                   href={`#${id}`}
-                  className="group flex min-h-9 items-center gap-3 text-xs font-semibold text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
+                  className="group flex min-h-9 items-center gap-3 rounded-lg px-2 text-xs font-semibold text-[var(--color-muted)] transition-colors hover:bg-[var(--color-accent-soft)] hover:text-[var(--color-text)]"
                 >
                   <span className="font-[family-name:var(--font-mono)] text-[9px] text-[var(--color-accent)]">
                     0{index + 1}
@@ -86,75 +114,80 @@ export default function DocumentationPage() {
         </aside>
 
         <div className="docs-content min-w-0">
-          {/* Architecture Image */}
-          <section id="architecture" className="mb-12 scroll-mt-8 sm:mb-16">
-            <div className="relative overflow-hidden border-2 border-black">
-              <Image
-                src="/Architecture.png"
-                alt="RepoLoom.ai system architecture diagram"
-                width={1200}
-                height={675}
-                className="w-full h-auto"
-                priority
-              />
-              <div
-                className="absolute left-[9.82%] top-[51.9%] flex h-[10.45%] w-[7%] items-center justify-center bg-white px-[0.25%] text-center font-sans text-[clamp(3px,0.55vw,8px)] font-medium leading-[1.08]"
-                aria-hidden="true"
-              >
-                RepoLoom.ai app installation and selects repositories
-              </div>
-            </div>
-            <p className="text-sm text-gray-500 text-center mt-3">
-              High-level system architecture — from GitHub issue to pull request
-            </p>
-          </section>
-
           {/* Overview Section */}
-          <section id="overview" className="mb-12 scroll-mt-8 sm:mb-16">
+          <section id="overview" className="mb-12 scroll-mt-28 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
               <Zap className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0" />
-              Project Overview
+              What RepoLoom does
             </h2>
-            <div className="border-2 border-black p-4 sm:p-6 bg-gray-50">
+            <div className="border-2 border-black p-5 sm:p-7 bg-gray-50">
               <p className="text-base sm:text-lg leading-relaxed mb-4">
-                This system automates the entire pull request workflow by
-                combining TypeScript AST parsing, hybrid search algorithms, and
-                LangGraph orchestration to generate, validate, and test code
-                changes with minimal manual intervention.
+                RepoLoom turns a scoped engineering task into a review-ready
+                pull request. It indexes the selected repository, retrieves the
+                code most relevant to the task, maps dependencies, and proposes
+                the smallest coherent set of file operations.
               </p>
               <p className="text-base sm:text-lg leading-relaxed">
-                The architecture leverages vector embeddings, BM25 keyword
-                indexing, and reciprocal rank fusion to intelligently retrieve
-                relevant code files, while E2B sandboxes provide isolated
-                testing environments with automated rollback capabilities.
+                Generated changes are applied inside an E2B sandbox and pass
+                syntax and TypeScript type validation before RepoLoom commits
+                the branch and opens a pull request. The result keeps the
+                evidence visible: affected files, operations, diff, explanation,
+                and PR link.
               </p>
             </div>
           </section>
 
           {/* Architecture Section */}
-          <section className="mb-12 scroll-mt-8 sm:mb-16">
+          <section id="architecture" className="mb-12 scroll-mt-28 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
               <Cpu className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0" />
               System Architecture
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
+            <figure className="architecture-figure mb-8 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-rule-strong)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]">
+              <div className="overflow-x-auto">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/repoloom-architecture.svg"
+                  alt="RepoLoom.ai system architecture: GitHub access and indexing feed hybrid retrieval, AST context construction, Gemini generation, E2B validation, and a review-ready pull request."
+                  width="1800"
+                  height="1120"
+                  className="h-auto min-w-[760px] w-full"
+                />
+              </div>
+              <figcaption className="flex flex-col gap-1 border-t border-[var(--color-rule)] px-4 py-3 text-xs text-[var(--color-muted)] sm:flex-row sm:items-center sm:justify-between sm:px-5">
+                <span>
+                  Current production flow, from repository connection to PR
+                  delivery.
+                </span>
+                <a
+                  href="/repoloom-architecture.svg"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-bold text-[var(--color-accent)] hover:text-[var(--color-accent-strong)]"
+                >
+                  Open full-size diagram ↗
+                </a>
+              </figcaption>
+            </figure>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 mb-8">
               <ArchitectureCard
-                title="Frontend"
-                description="Next.js + TypeScript interface for monitoring PR generation, viewing logs, and managing GitHub integrations"
-                deployment="Vercel"
+                title="Product surface"
+                description="Next.js workspace for GitHub connection, repository selection, task submission, and evidence-rich results."
+                deployment="Next.js 16"
                 icon={<FileCode className="w-6 h-6" />}
               />
               <ArchitectureCard
-                title="Backend"
-                description="Node.js + Express API handling webhooks, authentication, and orchestrating the entire PR workflow"
-                deployment="DigitalOcean"
+                title="Control plane"
+                description="Express and Bun handle OAuth, installations, repositories, task dispatch, and durable application data."
+                deployment="Express + Bun"
                 icon={<Database className="w-6 h-6" />}
               />
               <ArchitectureCard
-                title="Worker"
-                description="Redis-based queue processor executing long-running code generation and validation tasks asynchronously"
-                deployment="DigitalOcean"
+                title="Execution plane"
+                description="BullMQ workers index code, build retrieval context, generate operations, validate in E2B, and deliver the PR."
+                deployment="Redis + BullMQ"
                 icon={<GitBranch className="w-6 h-6" />}
               />
             </div>
@@ -169,18 +202,19 @@ export default function DocumentationPage() {
 
             <div className="space-y-6">
               <FeatureBlock
-                title="1. TypeScript AST Parsing"
-                description="Parses TypeScript source code into Abstract Syntax Trees to understand code structure, dependencies, and relationships between functions, classes, and modules."
+                title="1. AST-Aware Code Graph"
+                description="Parses candidate source files with Babel to map imports, exports, symbols, dependencies, and compact code skeletons before generation."
                 techStack={[
-                  "TypeScript Compiler API",
-                  "ts-morph",
+                  "Babel Parser",
                   "AST Traversal",
+                  "Dependency Graph",
+                  "Code Skeletons",
                 ]}
                 useCases={[
-                  "Extract function signatures and dependencies",
+                  "Extract symbols, signatures, and dependencies",
                   "Identify import/export relationships",
                   "Generate code skeletons for token efficiency",
-                  "Map cross-file references and call graphs",
+                  "Expand context around retrieved candidate files",
                 ]}
               />
 
@@ -190,8 +224,8 @@ export default function DocumentationPage() {
                 techStack={[
                   "BM25 Algorithm",
                   "Vector Embeddings",
-                  "Reciprocal Rank Fusion",
-                  "Pinecone/Vector DB",
+                  "Adaptive RRF",
+                  "Pinecone",
                 ]}
                 useCases={[
                   "Find relevant files when user describes a feature",
@@ -202,42 +236,42 @@ export default function DocumentationPage() {
               />
 
               <FeatureBlock
-                title="3. LangGraph Orchestration"
-                description="Uses LangGraph to orchestrate multi-step validation workflows with parallel consistency checks, retry logic, and state management."
+                title="3. LangGraph Validation Loop"
+                description="Uses LangGraph to apply generated file operations, run syntax and TypeScript checks, and feed actionable validation errors into a bounded correction loop."
                 techStack={[
                   "LangGraph",
-                  "LangChain",
-                  "State Machines",
-                  "Parallel Execution",
+                  "State Graph",
+                  "Syntax Validation",
+                  "Type Validation",
                 ]}
                 useCases={[
-                  "Validate code changes across multiple files simultaneously",
-                  "Check for breaking changes and type errors",
-                  "Coordinate between code generation and testing phases",
-                  "Implement retry strategies with exponential backoff",
+                  "Apply explicit create, update, and delete operations",
+                  "Catch syntax and TypeScript type failures",
+                  "Return validation errors to the generation step",
+                  "Cap correction attempts at three iterations",
                 ]}
               />
 
               <FeatureBlock
-                title="4. E2B Sandbox Testing"
-                description="Executes generated code in isolated E2B sandbox environments to run tests, validate functionality, and ensure no regressions before creating PRs."
+                title="4. E2B Sandbox Execution"
+                description="Clones the repository and applies proposed operations in an isolated E2B environment before any branch is committed or pushed."
                 techStack={[
                   "E2B SDK",
-                  "Docker Containers",
-                  "Automated Testing",
-                  "Rollback Mechanisms",
+                  "Isolated Filesystem",
+                  "Git",
+                  "Validation Commands",
                 ]}
                 useCases={[
-                  "Run unit and integration tests in isolation",
-                  "Validate code changes don't break existing functionality",
-                  "Automatically rollback failed changes",
-                  "Capture test outputs and error logs for debugging",
+                  "Apply file operations away from the user's machine",
+                  "Validate syntax and TypeScript types",
+                  "Capture command output for the correction loop",
+                  "Commit and push only after validation succeeds",
                 ]}
               />
 
               <FeatureBlock
                 title="5. GitHub Integration"
-                description="Deep integration with GitHub API for webhooks, OAuth authentication, repository cloning, and automated PR creation with detailed descriptions."
+                description="GitHub OAuth and GitHub App access provide repository selection, webhook-driven reindexing, secure cloning, branch pushes, and pull request creation."
                 techStack={[
                   "GitHub App API",
                   "Webhooks",
@@ -245,10 +279,10 @@ export default function DocumentationPage() {
                   "Octokit SDK",
                 ]}
                 useCases={[
-                  "Listen to push events and issue comments",
+                  "Listen for repository changes that require reindexing",
                   "Authenticate users and clone private repositories",
-                  "Create PRs with AI-generated code and descriptions",
-                  "Update PR status based on validation results",
+                  "Create branches, commits, and pull requests",
+                  "Return the PR URL, diff, operations, and explanation",
                 ]}
               />
             </div>
@@ -265,51 +299,51 @@ export default function DocumentationPage() {
               {[
                 {
                   step: 1,
-                  title: "Trigger Event",
+                  title: "Connect Repository",
                   description:
-                    "User creates an issue or comments on a PR describing the desired code change",
+                    "The engineer signs in with GitHub, installs the GitHub App, and selects the repository and branch RepoLoom may access.",
                 },
                 {
                   step: 2,
-                  title: "Webhook Reception",
+                  title: "Submit a Task",
                   description:
-                    "GitHub webhook fires to backend, validated via signature verification and queued in Redis",
+                    "The engineer describes a scoped code change in the RepoLoom workspace; the API creates a durable worker job.",
                 },
                 {
                   step: 3,
-                  title: "Code Indexing",
+                  title: "Index or Refresh",
                   description:
-                    "Worker clones repository, parses all TypeScript files into ASTs, generates embeddings and BM25 index",
+                    "On first use or after repository changes, the indexing worker clones the branch, chunks code, and updates BM25 and Pinecone indexes.",
                 },
                 {
                   step: 4,
-                  title: "Intelligent Retrieval",
+                  title: "Retrieve the Right Surface",
                   description:
-                    "Hybrid search uses reciprocal rank fusion to find top-k most relevant files based on user request",
+                    "BM25 and vector results are combined with adaptive reciprocal rank fusion to rank the files most relevant to the task.",
                 },
                 {
                   step: 5,
-                  title: "Code Generation",
+                  title: "Build Structural Context",
                   description:
-                    "LLM receives code skeletons (compressed ASTs) + context to generate proposed changes with minimal tokens",
+                    "Babel AST analysis expands candidate files into dependency-aware context and compact code skeletons.",
                 },
                 {
                   step: 6,
-                  title: "LangGraph Validation",
+                  title: "Generate File Operations",
                   description:
-                    "Parallel validation checks: type consistency, breaking changes, cross-file dependencies",
+                    "Gemini 2.5 Flash selects files and returns explicit create, update, and delete operations with an explanation.",
                 },
                 {
                   step: 7,
-                  title: "Sandbox Testing",
+                  title: "Apply and Validate",
                   description:
-                    "E2B sandbox executes tests on generated code; rollback if tests fail",
+                    "E2B applies the operations in isolation. LangGraph checks syntax and TypeScript types, with up to three correction attempts.",
                 },
                 {
                   step: 8,
-                  title: "PR Creation",
+                  title: "Deliver Evidence",
                   description:
-                    "If all validations pass, create GitHub PR with AI-generated description and link to issue",
+                    "RepoLoom commits and pushes the branch, opens a pull request, and returns the PR link, diff, file operations, and explanation for review.",
                 },
               ].map((item, index) => (
                 <WorkflowStep
@@ -346,17 +380,18 @@ export default function DocumentationPage() {
                 category="AI & ML"
                 technologies={[
                   "LangGraph",
-                  "LangChain",
-                  "OpenAI / Gemini API",
-                  "Vector Embeddings",
+                  "Gemini 2.5 Flash",
+                  "Gemini Embeddings",
                   "BM25 Search",
-                  "Reciprocal Rank Fusion",
+                  "Adaptive RRF",
+                  "Pinecone",
+                  "LangSmith Tracing",
                 ]}
               />
               <TechStackCard
                 category="Frontend"
                 technologies={[
-                  "Next.js 14+",
+                  "Next.js 16",
                   "React",
                   "TypeScript",
                   "Tailwind CSS",
@@ -364,14 +399,14 @@ export default function DocumentationPage() {
                 ]}
               />
               <TechStackCard
-                category="DevOps & Testing"
+                category="Execution & Delivery"
                 technologies={[
                   "E2B Sandbox",
-                  "Docker",
-                  "DigitalOcean",
-                  "Vercel",
-                  "GitHub Actions",
-                  "Daytona",
+                  "Redis + BullMQ",
+                  "GitHub App",
+                  "GitHub Webhooks",
+                  "Syntax Validation",
+                  "TypeScript Validation",
                 ]}
               />
             </div>
@@ -393,37 +428,37 @@ export default function DocumentationPage() {
               <OptimizationCard
                 title="Token Efficiency"
                 points={[
-                  "Code skeleton compression reduces context by 70-80%",
-                  "Only sends function signatures and type definitions to LLM",
-                  "Hybrid search limits files to top-k most relevant",
-                  "Incremental indexing only processes changed files",
+                  "Code skeletons compress structural context",
+                  "Candidate ranking limits full-file context",
+                  "Adaptive fusion balances lexical and semantic signals",
+                  "Incremental indexing scopes repository changes",
                 ]}
               />
               <OptimizationCard
                 title="Performance"
                 points={[
-                  "Redis queue prevents webhook timeouts",
-                  "Parallel validation with LangGraph workers",
-                  "Prisma connection pooling for database efficiency",
-                  "Vector index caching for fast retrieval",
+                  "BullMQ keeps long-running work outside request handling",
+                  "Dedicated indexing and generation queues",
+                  "Prisma manages the application data layer",
+                  "Repository indexes are reused between tasks",
                 ]}
               />
               <OptimizationCard
                 title="Reliability"
                 points={[
-                  "E2B sandbox isolation prevents code injection",
-                  "Automated rollback on test failures",
-                  "Exponential backoff retry logic",
-                  "Webhook signature verification prevents spoofing",
+                  "E2B isolates generated file operations",
+                  "Syntax and type failures block PR delivery",
+                  "Validation errors feed a bounded correction loop",
+                  "Webhook signatures protect repository events",
                 ]}
               />
               <OptimizationCard
                 title="Scalability"
                 points={[
-                  "Stateless backend enables horizontal scaling",
-                  "Worker processes can scale independently",
-                  "Database indexes on frequently queried fields",
-                  "CDN deployment for frontend (Vercel)",
+                  "API and workers remain independently deployable",
+                  "Indexing and generation workloads are separated",
+                  "Pinecone namespaces isolate repository vectors",
+                  "BullMQ provides durable asynchronous dispatch",
                 ]}
               />
             </div>
@@ -444,28 +479,28 @@ export default function DocumentationPage() {
                 />
                 <JourneyStep
                   number={2}
-                  action="Create Issue"
-                  detail='User creates an issue: "Add input validation to user registration endpoint"'
+                  action="Submit a Task"
+                  detail='User selects a repository and asks: "Add input validation to the user registration endpoint."'
                 />
                 <JourneyStep
                   number={3}
-                  action="Automatic Processing"
-                  detail="System indexes the repository (if not already done), identifies relevant files using hybrid search, and generates validation code"
+                  action="Retrieve and Understand"
+                  detail="RepoLoom refreshes the repository index when needed, ranks relevant files with hybrid search, and maps the surrounding dependency graph."
                 />
                 <JourneyStep
                   number={4}
-                  action="Validation & Testing"
-                  detail="LangGraph validates the generated code for type safety and cross-file consistency, then E2B sandbox runs all tests"
+                  action="Generate and Validate"
+                  detail="Gemini proposes explicit file operations. E2B applies them in isolation while LangGraph checks syntax and TypeScript types."
                 />
                 <JourneyStep
                   number={5}
                   action="PR Creation"
-                  detail="System creates a PR with the validation code, detailed description, and links back to the original issue"
+                  detail="After validation passes, RepoLoom commits the branch, pushes it, and creates a pull request with the generated change."
                 />
                 <JourneyStep
                   number={6}
                   action="Review & Merge"
-                  detail="User reviews the AI-generated code, requests changes if needed, and merges when satisfied"
+                  detail="The engineer reviews the PR, diff, file operations, and explanation, then decides whether to merge."
                 />
               </div>
             </div>

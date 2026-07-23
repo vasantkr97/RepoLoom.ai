@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * OAuth Popup Handler
  * Handles GitHub OAuth flow in a popup window
@@ -40,7 +42,7 @@ export function openOAuthPopup(url: string): Promise<OAuthResult> {
       // Verify origin for security
       const allowedOrigins = [
         window.location.origin,
-        process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.100xswe.app",
+        process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.repoloom.ai",
       ];
 
       if (!allowedOrigins.some((origin) => event.origin.startsWith(origin))) {

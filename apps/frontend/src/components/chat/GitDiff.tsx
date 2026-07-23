@@ -36,7 +36,7 @@ const GitDiff = ({ jobId, token }: GitDiffProps) => {
     }
 
     const backendUrl =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.100xswe.app";
+      process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.repoloom.ai";
     let intervalId: NodeJS.Timeout | null = null;
 
     const fetchFileDiffs = async () => {

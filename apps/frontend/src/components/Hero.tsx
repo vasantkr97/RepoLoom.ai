@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   ArrowDownRight,
+  ArrowRight,
   Check,
   GitBranch,
   Github,
@@ -35,8 +36,24 @@ export default function Hero() {
 
   return (
     <>
-      <section className="precision-canvas overflow-hidden px-4 pb-14 pt-28 sm:px-6 sm:pb-[72px] sm:pt-32 lg:px-10 lg:pb-20">
+      <section className="precision-canvas overflow-hidden px-4 pb-12 pt-32 sm:px-6 sm:pb-14 sm:pt-36 lg:px-10 lg:pb-16">
         <div className="mx-auto max-w-[1180px]">
+          <div className="precision-enter mb-8 flex justify-center sm:mb-9">
+            <div className="inline-flex max-w-full items-center rounded-full border border-[var(--color-rule)] bg-[var(--color-surface)] p-1 shadow-[var(--shadow-sm)]">
+              <span className="flex-none rounded-full bg-[var(--color-accent-soft)] px-2.5 py-1 text-[10px] font-extrabold tracking-[-0.01em] text-[var(--color-accent)] sm:text-[11px]">
+                RepoLoom.ai
+              </span>
+              <span className="flex min-w-0 items-center gap-1.5 px-2.5 text-[10px] font-bold text-[var(--color-muted)] sm:text-[11px]">
+                <span className="truncate">Repository context</span>
+                <ArrowRight
+                  className="h-3 w-3 flex-none text-[var(--color-accent)]"
+                  aria-hidden="true"
+                />
+                <span className="truncate">Validated PR</span>
+              </span>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="precision-enter lg:col-span-7">
               <p className="precision-label mb-4 text-[var(--color-accent)]">

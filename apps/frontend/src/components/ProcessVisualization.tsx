@@ -8,45 +8,45 @@ import {
 } from "lucide-react";
 
 const stages = [
-  { label: "Retrieve", icon: ScanSearch },
-  { label: "Understand", icon: Network },
-  { label: "Generate", icon: Braces },
-  { label: "Validate", icon: TestTube2 },
+  {
+    label: "Retrieve",
+    detail: "Keyword + semantic",
+    icon: ScanSearch,
+  },
+  {
+    label: "Understand",
+    detail: "AST + dependencies",
+    icon: Network,
+  },
+  {
+    label: "Generate",
+    detail: "Scoped operations",
+    icon: Braces,
+  },
+  {
+    label: "Validate",
+    detail: "Syntax + types",
+    icon: TestTube2,
+  },
 ];
 
 export default function ProcessVisualization() {
   return (
-    <div className="loom-glow relative min-h-[400px] overflow-hidden rounded-[var(--radius-lg)] p-5 text-[var(--color-surface)] shadow-[var(--shadow-md)] sm:p-6">
+    <div className="loom-glow relative overflow-hidden rounded-[var(--radius-lg)] p-5 text-[var(--color-surface)] shadow-[var(--shadow-md)] sm:p-6">
       <div className="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(circle,white_1px,transparent_1px)] [background-size:22px_22px]" />
 
-      <div className="relative flex items-start justify-between gap-6 border-b border-white/15 pb-5">
+      <div className="relative flex flex-col gap-3 border-b border-white/15 pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="precision-label !text-white/45">
-            Repository workflow / example
+            Inside a RepoLoom run
           </p>
           <h3 className="mt-2 max-w-md font-[family-name:var(--font-display)] text-2xl font-semibold leading-[1.05] tracking-[-0.03em]">
-            A visible path from task to proof.
+            Context narrows before code changes.
           </h3>
         </div>
-        <span className="hidden rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 font-[family-name:var(--font-mono)] text-[9px] uppercase tracking-[0.12em] text-white/60 sm:block">
-          Context scoped
+        <span className="w-fit rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 font-[family-name:var(--font-mono)] text-[9px] uppercase tracking-[0.12em] text-white/60">
+          Repository scoped
         </span>
-      </div>
-
-      <div className="relative mt-6 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-[1rem] border border-white/15 bg-white/[0.06] p-3.5 backdrop-blur-sm">
-          <p className="precision-label !text-white/45">Input / issue 4287</p>
-          <p className="mt-3 text-sm leading-6 text-white/80">
-            Add resilient error handling to concurrent payment operations.
-          </p>
-        </div>
-        <div className="rounded-[1rem] border border-[#dc8d63]/45 bg-[#dc8d63]/10 p-3.5 backdrop-blur-sm">
-          <p className="precision-label !text-white/45">Output / pull 4288</p>
-          <div className="mt-3 flex items-center gap-2 text-sm font-semibold">
-            <GitPullRequest className="h-4 w-4" aria-hidden="true" />
-            Ready for human review
-          </div>
-        </div>
       </div>
 
       <div className="relative mt-6">
@@ -74,34 +74,40 @@ export default function ProcessVisualization() {
                   0{index + 1}
                 </p>
                 <p className="mt-0.5 text-sm font-semibold">{stage.label}</p>
+                <p className="mt-0.5 text-[10px] text-white/45">
+                  {stage.detail}
+                </p>
               </div>
             </li>
           ))}
         </ol>
       </div>
 
-      <div className="relative mt-7 rounded-[1rem] bg-[var(--color-surface)] p-4 text-[var(--color-text)] shadow-[var(--shadow-md)]">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="relative mt-7 grid gap-3 border-t border-white/15 pt-5 sm:grid-cols-[1fr_auto] sm:items-center">
+        <div className="flex items-center gap-3">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-surface)] text-[var(--color-accent)]">
+            <GitPullRequest className="h-4 w-4" aria-hidden="true" />
+          </span>
           <div>
-            <p className="precision-label">Validation ledger</p>
-            <p className="mt-1 text-sm font-semibold">
-              Syntax checked, types checked, ready for review
+            <p className="precision-label !text-white/45">Delivery rule</p>
+            <p className="mt-0.5 text-sm font-semibold">
+              Validation passes before the PR opens.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {["Syntax", "Types", "Sandbox"].map((item) => (
-              <span
-                key={item}
-                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-rule)] px-2.5 py-1 text-[10px] font-semibold"
-              >
-                <Check
-                  className="h-3 w-3 text-[var(--color-success)]"
-                  aria-hidden="true"
-                />
-                {item}
-              </span>
-            ))}
-          </div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {["Syntax", "Types", "Sandbox"].map((item) => (
+            <span
+              key={item}
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.055] px-2.5 py-1 text-[10px] font-semibold"
+            >
+              <Check
+                className="h-3 w-3 text-[var(--color-success)]"
+                aria-hidden="true"
+              />
+              {item}
+            </span>
+          ))}
         </div>
       </div>
     </div>

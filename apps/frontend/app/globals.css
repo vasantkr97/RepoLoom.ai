@@ -135,29 +135,29 @@
 @layer components {
   .loomed-landing {
     /* Proof, not theatre — YC landing-page token system */
-    --color-bg: #f6f7f4;
-    --color-surface: #ffffff;
-    --color-surface-strong: #ebeee9;
-    --color-text: #0d1512;
-    --color-muted: #65706a;
-    --color-accent: #16835d;
-    --color-accent-strong: #0f6748;
-    --color-accent-soft: #e2f1e9;
-    --color-copper: #cc7448;
-    --color-copper-soft: #f4e2d8;
+    --color-bg: #edf1ed;
+    --color-surface: #fafbf9;
+    --color-surface-strong: #dfe6e0;
+    --color-text: #0b1511;
+    --color-muted: #59675f;
+    --color-accent: #137456;
+    --color-accent-strong: #0c5d43;
+    --color-accent-soft: #d8ebe1;
+    --color-copper: #bf6843;
+    --color-copper-soft: #efddd3;
     --color-focus: #2667d8;
-    --color-success: #238761;
-    --color-rule: rgba(13, 21, 18, 0.09);
-    --color-rule-strong: rgba(13, 21, 18, 0.16);
+    --color-success: #1c7957;
+    --color-rule: rgba(11, 21, 17, 0.12);
+    --color-rule-strong: rgba(11, 21, 17, 0.21);
     --font-display: var(--font-plus-jakarta-sans), "Avenir Next", sans-serif;
     --font-body: var(--font-dm-sans), "Avenir Next", "Trebuchet MS", sans-serif;
     --radius-sm: 0.625rem;
     --radius-md: 1rem;
     --radius-lg: 1.375rem;
     --radius-xl: 1.75rem;
-    --shadow-sm: 0 1px 2px rgba(16, 33, 27, 0.06);
-    --shadow-md: 0 14px 36px rgba(13, 21, 18, 0.065);
-    --shadow-lg: 0 24px 60px rgba(13, 21, 18, 0.1);
+    --shadow-sm: 0 1px 2px rgba(13, 28, 22, 0.07);
+    --shadow-md: 0 15px 38px rgba(13, 28, 22, 0.09);
+    --shadow-lg: 0 26px 64px rgba(13, 28, 22, 0.14);
     color: var(--color-text);
     font-family: var(--font-body);
   }
@@ -166,7 +166,7 @@
     background-color: var(--color-bg);
     background-image: radial-gradient(
       circle at 78% -8%,
-      rgba(22, 131, 93, 0.075),
+      rgba(19, 116, 86, 0.1),
       transparent 32rem
     );
   }
@@ -277,9 +277,9 @@
   .docs-shell .docs-content h2 {
     margin-bottom: 1.5rem;
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 400;
-    line-height: 0.98;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 600;
+    line-height: 1;
     letter-spacing: -0.035em;
   }
 
@@ -296,9 +296,14 @@
   .docs-shell .docs-content .border-2 {
     border-width: 1px;
     border-color: var(--color-rule-strong);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     background-color: var(--color-surface);
     box-shadow: var(--shadow-sm);
+  }
+
+  .docs-shell .docs-content .border {
+    border-color: var(--color-rule-strong);
+    border-radius: var(--radius-sm);
   }
 
   .docs-shell .docs-content .border-black,
@@ -318,12 +323,57 @@
   }
 
   .docs-shell .docs-content [class*="hover:bg-gray-50"]:hover {
-    background-color: var(--color-bg);
+    background-color: var(--color-accent-soft);
   }
 
   .docs-shell .docs-content code,
   .docs-shell .docs-content .font-mono {
     font-family: var(--font-mono);
+  }
+
+  .loomed-landing.docs-shell {
+    background-color: var(--color-bg);
+    background-image:
+      linear-gradient(rgba(11, 21, 17, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(11, 21, 17, 0.025) 1px, transparent 1px),
+      radial-gradient(
+        circle at 82% 2%,
+        rgba(19, 116, 86, 0.1),
+        transparent 30rem
+      );
+    background-size:
+      52px 52px,
+      52px 52px,
+      100% 100%;
+  }
+
+  .docs-shell .docs-content > section,
+  .docs-shell .docs-content > div {
+    scroll-margin-top: 7rem;
+  }
+
+  .docs-shell .docs-content > section + section,
+  .docs-shell .docs-content > section + div,
+  .docs-shell .docs-content > div + section {
+    border-top: 1px solid var(--color-rule);
+    padding-top: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .docs-shell .docs-content p,
+  .docs-shell .docs-content li {
+    text-wrap: pretty;
+  }
+
+  .docs-shell .docs-content button {
+    border-radius: var(--radius-lg);
+  }
+
+  .docs-shell .docs-content .architecture-figure {
+    background: var(--color-surface);
+  }
+
+  .docs-shell .docs-content .architecture-figure img {
+    display: block;
   }
 }
 

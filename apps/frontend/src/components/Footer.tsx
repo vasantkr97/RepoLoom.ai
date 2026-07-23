@@ -4,7 +4,7 @@ import BrandMark from "@/components/BrandMark";
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--color-surface)] px-3 pb-3 text-[var(--color-surface)] sm:px-5 sm:pb-5">
+    <footer className="bg-[var(--color-surface)] px-3 pb-3 pt-10 text-[var(--color-surface)] sm:px-5 sm:pb-5 sm:pt-12">
       <div className="loom-glow mx-auto max-w-[1220px] overflow-hidden rounded-[var(--radius-lg)] px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
         <div className="grid gap-8 border-b border-white/15 pb-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
@@ -51,7 +51,7 @@ export default function Footer() {
             <div className="space-y-3">
               <p className="precision-label !text-white/40">Source</p>
               <a
-                href="https://github.com/Deepak7704/100xSWE/"
+                href="https://github.com/vasantkr97/RepoLoom.ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex min-h-11 items-center gap-2 text-white/70 transition-colors hover:text-white"

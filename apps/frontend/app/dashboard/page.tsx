@@ -46,7 +46,7 @@ export default function Dashboard() {
     try {
       setLoadingRepos(true);
       const backendUrl =
-        process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.100xswe.app";
+        process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.repoloom.ai";
 
       const response = await fetch(`${backendUrl}/auth/repos`, {
         headers: {
@@ -106,7 +106,7 @@ export default function Dashboard() {
 
     try {
       const backendUrl =
-        process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.100xswe.app";
+        process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.repoloom.ai";
       const response = await fetch(`${backendUrl}/api/chat`, {
         method: "POST",
         headers: {
@@ -411,8 +411,9 @@ export default function Dashboard() {
                   <button
                     type="button"
                     onClick={() => {
-                      window.location.href =
-                        "https://github.com/apps/100xSWE/installations/new";
+                      window.location.href = `https://github.com/apps/${
+                        process.env.NEXT_PUBLIC_GITHUB_APP_SLUG || "repoloom-ai"
+                      }/installations/new`;
                     }}
                     className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[var(--color-text)] px-4 py-2.5 text-sm font-semibold text-[var(--color-surface)] transition duration-[var(--duration-fast)] hover:bg-[var(--color-accent)] active:translate-y-px"
                   >

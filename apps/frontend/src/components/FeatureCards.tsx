@@ -36,7 +36,7 @@ export default function FeatureCards() {
   return (
     <section
       id="product"
-      className="border-y border-[var(--color-rule)] bg-[var(--color-surface)] px-4 py-14 sm:px-6 sm:py-[72px] lg:px-10 lg:py-20"
+      className="border-y border-[var(--color-rule)] bg-[var(--color-surface)] px-4 py-12 sm:px-6 sm:py-14 lg:px-10 lg:py-16"
     >
       <div className="mx-auto max-w-[1180px]">
         <div className="mb-8 grid gap-5 lg:grid-cols-12 lg:items-end">

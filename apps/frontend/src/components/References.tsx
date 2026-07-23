@@ -58,7 +58,7 @@ const references: Reference[] = [
     items: [
       {
         title: "Inspect the source repository",
-        url: "https://github.com/Deepak7704/100xSWE",
+        url: "https://github.com/vasantkr97/RepoLoom.ai",
       },
     ],
   },

@@ -8,7 +8,6 @@ import {
   Shield,
   ChevronDown,
   ExternalLink,
-  ArrowRight,
   Layers,
   Zap,
   BarChart3,
@@ -459,14 +458,14 @@ export default function DeepDive() {
             <FlowStep
               number={1}
               title="Code Generation"
-              description="LLM receives code skeletons, dependency maps, and the issue description. Generates targeted file modifications."
-              tech="LangGraph + OpenAI / Gemini"
+              description="Gemini receives code skeletons, dependency maps, and the submitted task. It returns targeted file operations."
+              tech="LangGraph + Gemini 2.5 Flash"
             />
             <FlowStep
               number={2}
               title="Type & Syntax Validation"
               description="Generated code is validated for type consistency and syntax correctness. Exact error messages are captured."
-              tech="TypeScript Compiler API"
+              tech="Babel + TypeScript"
             />
             <FlowStep
               number={3}
@@ -477,7 +476,7 @@ export default function DeepDive() {
             <FlowStep
               number={4}
               title="PR Creation"
-              description="Once all validations pass, the system opens a pull request with AI-generated description linked to the original issue."
+              description="Once validation passes, the system commits the branch and opens a pull request with the generated change and explanation."
               tech="GitHub API + Octokit"
               isLast
             />

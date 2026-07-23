@@ -1,0 +1,254 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120" fill="none">
+  <title>RepoLoom.ai system architecture</title>
+  <desc>Architecture diagram showing repository access, indexing, hybrid retrieval, AST context construction, code generation, sandbox validation, and pull request delivery.</desc>
+  <defs>
+    <linearGradient id="canvas" x1="80" y1="20" x2="1700" y2="1110" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FAFBF9"/>
+      <stop offset="1" stop-color="#EDF1ED"/>
+    </linearGradient>
+    <linearGradient id="taskLane" x1="50" y1="0" x2="1748" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E4F0EA"/>
+      <stop offset="1" stop-color="#F4F7F3"/>
+    </linearGradient>
+    <linearGradient id="indexLane" x1="50" y1="0" x2="1748" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5E7DF"/>
+      <stop offset="1" stop-color="#F7F7F3"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0B1511" flood-opacity=".08"/>
+    </filter>
+    <filter id="smallShadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0B1511" flood-opacity=".06"/>
+    </filter>
+    <marker id="arrowGreen" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1L11 6L1 11V1Z" fill="#137456"/>
+    </marker>
+    <marker id="arrowCopper" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1L11 6L1 11V1Z" fill="#BF6843"/>
+    </marker>
+    <marker id="arrowMuted" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M1 1L11 6L1 11V1Z" fill="#738078"/>
+    </marker>
+    <style>
+      .eyebrow { font: 700 13px "DM Sans", "Avenir Next", "Segoe UI", sans-serif; letter-spacing: 2.4px; text-transform: uppercase; }
+      .title { font: 700 43px "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif; letter-spacing: -1.8px; }
+      .subtitle { font: 400 18px "DM Sans", "Avenir Next", "Segoe UI", sans-serif; }
+      .lane-title { font: 700 14px "DM Sans", "Avenir Next", "Segoe UI", sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+      .box-title { font: 700 20px "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif; letter-spacing: -.35px; }
+      .box-body { font: 400 14px "DM Sans", "Avenir Next", "Segoe UI", sans-serif; }
+      .box-meta { font: 700 11px "DM Sans", "Avenir Next", "Segoe UI", sans-serif; letter-spacing: 1.4px; text-transform: uppercase; }
+      .small { font: 500 13px "DM Sans", "Avenir Next", "Segoe UI", sans-serif; }
+      .legend { font: 600 13px "DM Sans", "Avenir Next", "Segoe UI", sans-serif; }
+    </style>
+  </defs>
+
+  <rect width="1800" height="1120" rx="40" fill="url(#canvas)"/>
+  <path d="M0 0H1800V1120H0V0Z" fill="url(#canvas)"/>
+  <circle cx="1660" cy="30" r="280" fill="#D8EBE1" opacity=".38"/>
+  <circle cx="120" cy="1050" r="240" fill="#EFDDD3" opacity=".28"/>
+
+  <g transform="translate(64 60)">
+    <rect width="38" height="38" rx="12" fill="#0B1511"/>
+    <path d="M11 12.5H18.5C23.2 12.5 27 16.3 27 21C27 25.7 23.2 29.5 18.5 29.5H11V12.5Z" stroke="#FAFBF9" stroke-width="2.2"/>
+    <path d="M15 8V33" stroke="#42B98C" stroke-width="2.2" stroke-linecap="round"/>
+    <text x="56" y="13" class="eyebrow" fill="#137456">Repository intelligence / system map</text>
+    <text x="56" y="62" class="title" fill="#0B1511">RepoLoom.ai — system architecture</text>
+    <text x="56" y="96" class="subtitle" fill="#59675F">From repository access and indexing to a validated, review-ready pull request.</text>
+  </g>
+
+  <!-- CONTROL PLANE -->
+  <g>
+    <rect x="50" y="200" width="1700" height="214" rx="30" fill="#FAFBF9" stroke="#B8C4BB"/>
+    <text x="82" y="237" class="lane-title" fill="#59675F">01 / Access &amp; control plane</text>
+
+    <g filter="url(#smallShadow)">
+      <rect x="82" y="260" width="220" height="116" rx="22" fill="#0B1511"/>
+      <circle cx="112" cy="292" r="13" fill="#D8EBE1"/>
+      <path d="M106 293.5C106 289.9 108.7 287 112 287C115.3 287 118 289.9 118 293.5M104 299.5H120" stroke="#137456" stroke-width="1.8" stroke-linecap="round"/>
+      <text x="136" y="298" class="box-title" fill="#FAFBF9">Engineer</text>
+      <text x="104" y="330" class="box-body" fill="#C7D0CA">Connects a repository</text>
+      <text x="104" y="352" class="box-body" fill="#C7D0CA">and submits a task.</text>
+    </g>
+
+    <g filter="url(#smallShadow)">
+      <rect x="354" y="260" width="264" height="116" rx="22" fill="#FFFFFF" stroke="#B8C4BB"/>
+      <rect x="376" y="282" width="31" height="31" rx="9" fill="#D8EBE1"/>
+      <path d="M385 290H398V303H385V290ZM388 294H395M388 298H395" stroke="#137456" stroke-width="1.6" stroke-linecap="round"/>
+      <text x="422" y="301" class="box-title" fill="#0B1511">RepoLoom workspace</text>
+      <text x="376" y="332" class="box-body" fill="#59675F">Next.js 16 frontend</text>
+      <text x="376" y="354" class="box-body" fill="#59675F">OAuth, repositories, tasks, results</text>
+    </g>
+
+    <g filter="url(#smallShadow)">
+      <rect x="670" y="260" width="248" height="116" rx="22" fill="#FFFFFF" stroke="#B8C4BB"/>
+      <rect x="692" y="282" width="31" height="31" rx="9" fill="#D8EBE1"/>
+      <path d="M700 291H715M700 297H715M700 303H710" stroke="#137456" stroke-width="1.8" stroke-linecap="round"/>
+      <text x="738" y="301" class="box-title" fill="#0B1511">Application API</text>
+      <text x="692" y="332" class="box-body" fill="#59675F">Express + Bun</text>
+      <text x="692" y="354" class="box-body" fill="#59675F">Auth, task dispatch, result delivery</text>
+    </g>
+
+    <g filter="url(#smallShadow)">
+      <rect x="970" y="260" width="224" height="116" rx="22" fill="#FFFFFF" stroke="#B8C4BB"/>
+      <rect x="992" y="282" width="31" height="31" rx="9" fill="#E4F0EA"/>
+      <ellipse cx="1007.5" cy="290" rx="8" ry="3.5" stroke="#137456" stroke-width="1.6"/>
+      <path d="M999.5 290V303C999.5 305 1003 306.5 1007.5 306.5C1012 306.5 1015.5 305 1015.5 303V290M999.5 296.5C999.5 298.5 1003 300 1007.5 300C1012 300 1015.5 298.5 1015.5 296.5" stroke="#137456" stroke-width="1.6"/>
+      <text x="1038" y="301" class="box-title" fill="#0B1511">PostgreSQL</text>
+      <text x="992" y="332" class="box-body" fill="#59675F">Prisma data layer</text>
+      <text x="992" y="354" class="box-body" fill="#59675F">Users, installs, repositories</text>
+    </g>
+
+    <g filter="url(#smallShadow)">
+      <rect x="1246" y="260" width="212" height="116" rx="22" fill="#FFFFFF" stroke="#B8C4BB"/>
+      <rect x="1268" y="282" width="31" height="31" rx="9" fill="#F5E7DF"/>
+      <path d="M1277 291H1290V304H1277V291ZM1281 287V291M1286 287V291M1281 304V308M1286 304V308" stroke="#BF6843" stroke-width="1.6" stroke-linecap="round"/>
+      <text x="1314" y="301" class="box-title" fill="#0B1511">Redis + BullMQ</text>
+      <text x="1268" y="332" class="box-body" fill="#59675F">Sessions, queues, BM25 cache</text>
+      <text x="1268" y="354" class="box-body" fill="#59675F">Indexing + generation jobs</text>
+    </g>
+
+    <g filter="url(#smallShadow)">
+      <rect x="1480" y="260" width="238" height="116" rx="22" fill="#0B1511"/>
+      <circle cx="1510" cy="297" r="14" fill="#D8EBE1"/>
+      <path d="M1503 298C1503 293.6 1506.1 290 1510 290C1513.9 290 1517 293.6 1517 298C1517 302.4 1513.9 306 1510 306" stroke="#137456" stroke-width="1.7" stroke-linecap="round"/>
+      <text x="1535" y="302" class="box-title" fill="#FAFBF9">GitHub</text>
+      <text x="1502" y="332" class="box-body" fill="#C7D0CA">OAuth + GitHub App</text>
+      <text x="1502" y="354" class="box-body" fill="#C7D0CA">Repositories, webhooks, PRs</text>
+    </g>
+
+    <path d="M302 318H342" stroke="#137456" stroke-width="3" marker-end="url(#arrowGreen)"/>
+    <path d="M618 318H658" stroke="#137456" stroke-width="3" marker-end="url(#arrowGreen)"/>
+    <path d="M918 300H958" stroke="#738078" stroke-width="2.5" marker-end="url(#arrowMuted)"/>
+    <path d="M794 376V394H1352V386" stroke="#738078" stroke-width="2.5" marker-end="url(#arrowMuted)"/>
+    <path d="M794 260V246H1599V250" stroke="#137456" stroke-width="3" marker-end="url(#arrowGreen)"/>
+  </g>
+
+  <!-- INDEXING LANE -->
+  <g>
+    <rect x="50" y="448" width="1700" height="224" rx="30" fill="url(#indexLane)" stroke="#D7C4B8"/>
+    <text x="82" y="486" class="lane-title" fill="#9B4D31">02 / Repository knowledge — full and incremental indexing</text>
+
+    <g>
+      <rect x="82" y="516" width="232" height="116" rx="22" fill="#FFFFFF" stroke="#D7C4B8"/>
+      <text x="104" y="546" class="box-meta" fill="#BF6843">Trigger</text>
+      <text x="104" y="578" class="box-title" fill="#0B1511">Repository change</text>
+      <text x="104" y="604" class="box-body" fill="#59675F">Webhook or first-task cache</text>
+      <text x="104" y="623" class="box-body" fill="#59675F">miss requests a fresh index.</text>
+    </g>
+    <g>
+      <rect x="358" y="516" width="224" height="116" rx="22" fill="#FFFFFF" stroke="#D7C4B8"/>
+      <text x="380" y="546" class="box-meta" fill="#BF6843">Queue</text>
+      <text x="380" y="578" class="box-title" fill="#0B1511">Indexing worker</text>
+      <text x="380" y="605" class="box-body" fill="#59675F">Clones the selected branch</text>
+      <text x="380" y="625" class="box-body" fill="#59675F">and scopes changed files.</text>
+    </g>
+    <g>
+      <rect x="626" y="516" width="240" height="116" rx="22" fill="#FFFFFF" stroke="#D7C4B8"/>
+      <text x="648" y="546" class="box-meta" fill="#BF6843">Structure</text>
+      <text x="648" y="578" class="box-title" fill="#0B1511">Chunk + parse code</text>
+      <text x="648" y="604" class="box-body" fill="#59675F">Chunks preserve file, symbol,</text>
+      <text x="648" y="623" class="box-body" fill="#59675F">language, and import metadata.</text>
+    </g>
+    <g>
+      <rect x="910" y="516" width="242" height="116" rx="22" fill="#FFFFFF" stroke="#D7C4B8"/>
+      <text x="932" y="546" class="box-meta" fill="#BF6843">Semantic signal</text>
+      <text x="932" y="578" class="box-title" fill="#0B1511">Gemini embeddings</text>
+      <text x="932" y="605" class="box-body" fill="#59675F">Dense vectors capture meaning</text>
+      <text x="932" y="625" class="box-body" fill="#59675F">beyond exact token matches.</text>
+    </g>
+    <g>
+      <rect x="1196" y="516" width="232" height="116" rx="22" fill="#FFFFFF" stroke="#D7C4B8"/>
+      <text x="1218" y="546" class="box-meta" fill="#BF6843">Keyword signal</text>
+      <text x="1218" y="578" class="box-title" fill="#0B1511">BM25 index</text>
+      <text x="1218" y="605" class="box-body" fill="#59675F">Redis-backed lexical ranking</text>
+      <text x="1218" y="625" class="box-body" fill="#59675F">preserves exact identifiers.</text>
+    </g>
+    <g>
+      <rect x="1472" y="516" width="246" height="116" rx="22" fill="#0B1511"/>
+      <text x="1494" y="546" class="box-meta" fill="#6DD4AC">Vector store</text>
+      <text x="1494" y="578" class="box-title" fill="#FAFBF9">Pinecone</text>
+      <text x="1494" y="605" class="box-body" fill="#C7D0CA">Embeddings are namespaced</text>
+      <text x="1494" y="625" class="box-body" fill="#C7D0CA">per repository and branch.</text>
+    </g>
+
+    <path d="M314 574H346" stroke="#BF6843" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#arrowCopper)"/>
+    <path d="M582 574H614" stroke="#BF6843" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#arrowCopper)"/>
+    <path d="M866 574H898" stroke="#BF6843" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#arrowCopper)"/>
+    <path d="M1152 574H1184" stroke="#BF6843" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#arrowCopper)"/>
+    <path d="M1428 574H1460" stroke="#BF6843" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#arrowCopper)"/>
+    <path d="M1614 376V446" stroke="#BF6843" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#arrowCopper)"/>
+    <path d="M1352 376V446" stroke="#738078" stroke-width="2.5" marker-end="url(#arrowMuted)"/>
+  </g>
+
+  <!-- GENERATION LANE -->
+  <g>
+    <rect x="50" y="706" width="1700" height="252" rx="30" fill="url(#taskLane)" stroke="#A8C7B8"/>
+    <text x="82" y="744" class="lane-title" fill="#137456">03 / Task execution — context, change, proof, delivery</text>
+
+    <g>
+      <rect x="82" y="774" width="222" height="142" rx="22" fill="#FFFFFF" stroke="#A8C7B8"/>
+      <text x="104" y="804" class="box-meta" fill="#137456">Task queue</text>
+      <text x="104" y="837" class="box-title" fill="#0B1511">Generation worker</text>
+      <text x="104" y="865" class="box-body" fill="#59675F">Receives task, repository,</text>
+      <text x="104" y="886" class="box-body" fill="#59675F">branch, and GitHub credentials.</text>
+    </g>
+    <g>
+      <rect x="346" y="774" width="230" height="142" rx="22" fill="#FFFFFF" stroke="#A8C7B8"/>
+      <text x="368" y="804" class="box-meta" fill="#137456">Retrieve</text>
+      <text x="368" y="837" class="box-title" fill="#0B1511">Hybrid search</text>
+      <text x="368" y="865" class="box-body" fill="#59675F">BM25 + vectors are fused with</text>
+      <text x="368" y="886" class="box-body" fill="#59675F">adaptive reciprocal rank fusion.</text>
+    </g>
+    <g>
+      <rect x="618" y="774" width="244" height="142" rx="22" fill="#FFFFFF" stroke="#A8C7B8"/>
+      <text x="640" y="804" class="box-meta" fill="#137456">Understand</text>
+      <text x="640" y="837" class="box-title" fill="#0B1511">Babel AST graph</text>
+      <text x="640" y="865" class="box-body" fill="#59675F">Dependencies, candidate files,</text>
+      <text x="640" y="886" class="box-body" fill="#59675F">and compact code skeletons.</text>
+    </g>
+    <g>
+      <rect x="904" y="774" width="236" height="142" rx="22" fill="#FFFFFF" stroke="#A8C7B8"/>
+      <text x="926" y="804" class="box-meta" fill="#137456">Generate</text>
+      <text x="926" y="837" class="box-title" fill="#0B1511">Gemini 2.5 Flash</text>
+      <text x="926" y="865" class="box-body" fill="#59675F">Chooses files and returns</text>
+      <text x="926" y="886" class="box-body" fill="#59675F">explicit create, update, delete ops.</text>
+    </g>
+    <g>
+      <rect x="1182" y="774" width="244" height="142" rx="22" fill="#FFFFFF" stroke="#A8C7B8"/>
+      <text x="1204" y="804" class="box-meta" fill="#137456">Validate</text>
+      <text x="1204" y="837" class="box-title" fill="#0B1511">E2B + LangGraph</text>
+      <text x="1204" y="865" class="box-body" fill="#59675F">Applies changes in isolation;</text>
+      <text x="1204" y="886" class="box-body" fill="#59675F">syntax + type loop, ≤ 3 attempts.</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="1468" y="774" width="250" height="142" rx="22" fill="#0B1511"/>
+      <text x="1490" y="804" class="box-meta" fill="#6DD4AC">Deliver</text>
+      <text x="1490" y="837" class="box-title" fill="#FAFBF9">Review-ready PR</text>
+      <text x="1490" y="865" class="box-body" fill="#C7D0CA">Commit + push, PR URL, diff,</text>
+      <text x="1490" y="886" class="box-body" fill="#C7D0CA">file operations, and explanation.</text>
+    </g>
+
+    <path d="M304 846H334" stroke="#137456" stroke-width="3.2" marker-end="url(#arrowGreen)"/>
+    <path d="M576 846H606" stroke="#137456" stroke-width="3.2" marker-end="url(#arrowGreen)"/>
+    <path d="M862 846H892" stroke="#137456" stroke-width="3.2" marker-end="url(#arrowGreen)"/>
+    <path d="M1140 846H1170" stroke="#137456" stroke-width="3.2" marker-end="url(#arrowGreen)"/>
+    <path d="M1426 846H1456" stroke="#137456" stroke-width="3.2" marker-end="url(#arrowGreen)"/>
+    <path d="M1352 376V704" stroke="#137456" stroke-width="2.5" opacity=".45" marker-end="url(#arrowGreen)"/>
+    <path d="M1312 632V690H460V762" stroke="#738078" stroke-width="2.2" marker-end="url(#arrowMuted)"/>
+    <path d="M1593 916V976H486V388" stroke="#137456" stroke-width="2.5" opacity=".5" marker-end="url(#arrowGreen)"/>
+  </g>
+
+  <!-- LEGEND AND CURRENT GUARANTEE -->
+  <g>
+    <rect x="50" y="992" width="1700" height="82" rx="24" fill="#FFFFFF" stroke="#B8C4BB"/>
+    <path d="M82 1026H126" stroke="#137456" stroke-width="3" marker-end="url(#arrowGreen)"/>
+    <text x="142" y="1031" class="legend" fill="#334139">Primary task path</text>
+    <path d="M318 1026H362" stroke="#BF6843" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#arrowCopper)"/>
+    <text x="378" y="1031" class="legend" fill="#334139">Indexing path</text>
+    <path d="M540 1026H584" stroke="#738078" stroke-width="2.5" marker-end="url(#arrowMuted)"/>
+    <text x="600" y="1031" class="legend" fill="#334139">Storage / queue connection</text>
+    <rect x="891" y="1010" width="831" height="46" rx="15" fill="#E4F0EA"/>
+    <circle cx="918" cy="1033" r="8" fill="#137456"/>
+    <text x="938" y="1038" class="small" fill="#334139">Current guarantee: syntax and TypeScript type validation. Human review remains the merge gate.</text>
+  </g>
+</svg>

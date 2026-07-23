@@ -30,8 +30,9 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const router = useRouter();
 
   const backendUrl =
-    process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.100xswe.app";
-  const githubAppName = "100xSWE";
+    process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.repoloom.ai";
+  const githubAppName =
+    process.env.NEXT_PUBLIC_GITHUB_APP_SLUG || "repoloom-ai";
 
   const handleGitHubLogin = async () => {
     setLoading(true);
@@ -99,9 +100,6 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const handleInstallApp = () => {
     // Redirect to GitHub App installation page
     // After installation, GitHub will redirect back to our callback URL
-    const frontendUrl =
-      process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000";
-    const redirectUri = `${frontendUrl}/installation/callback`;
     const installUrl = `https://github.com/apps/${githubAppName}/installations/new?state=install`;
 
     console.log(

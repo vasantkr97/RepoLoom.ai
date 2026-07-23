@@ -47,7 +47,7 @@ function InstallationCallbackContent() {
         }
 
         const backendUrl =
-          process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.100xswe.app";
+          process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.repoloom.ai";
 
         // Polling configuration
         const maxAttempts = 15; // 30 seconds total

@@ -23,7 +23,7 @@ export function useJobStatus(jobId: string | null, token: string | null) {
     }
 
     const backendUrl =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.100xswe.app";
+      process.env.NEXT_PUBLIC_BACKEND_URL || "https://be.repoloom.ai";
 
     const fetchStatus = async () => {
       try {

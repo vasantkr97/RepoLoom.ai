@@ -106,10 +106,10 @@ export class GitService {
     const escapedCommitMessage = commitMessage.replace(/'/g, "'\\''");
 
     await sandbox.commands.run(
-      `cd '${escapedRepoPath}' && git config user.email "bot@100xswe.com"`
+      `cd '${escapedRepoPath}' && git config user.email "bot@repoloom.ai"`
     );
     await sandbox.commands.run(
-      `cd '${escapedRepoPath}' && git config user.name "100xSWE Bot"`
+      `cd '${escapedRepoPath}' && git config user.name "RepoLoom.ai Bot"`
     );
 
     await sandbox.commands.run(
